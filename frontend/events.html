@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LPU Social | Events</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Existing stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="container nav-container">
+
+            <a href="index.html" class="logo">
+                LPU SOCIAL
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="events.html" class="active">Events</a>
+                </li>
+
+                <li>
+                    <a href="#">Create Event</a>
+                </li>
+
+                <li>
+                    <a href="#">My Events</a>
+                </li>
+
+            </ul>
+
+            <div class="nav-auth" id="navAuth">
+
+                <a href="#" class="login-link">
+                    Login
+                </a>
+
+                <a href="#" class="btn btn-primary">
+                    Sign Up
+                </a>
+
+            </div>
+
+            <button class="menu-toggle" id="mobileMenuBtn">
+                ☰
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= EVENTS HEADER ================= -->
+
+    <header class="events-page-header">
+
+        <div class="container">
+
+            <p class="page-label">
+                CAMPUS ACTIVITIES
+            </p>
+
+            <h1>
+                Discover Events
+            </h1>
+
+            <p>
+                Explore workshops, competitions, sports, cultural activities
+                and other events happening across LPU.
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= SEARCH & FILTERS ================= -->
+
+    <section class="events-filter-section">
+
+        <div class="container">
+
+            <!-- Search -->
+
+            <div class="events-search">
+
+                <span class="search-icon">
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="eventSearch"
+                    placeholder="Search events, workshops, competitions..."
+                >
+
+                <button class="search-btn" id="eventSearchBtn">
+                    Search
+                </button>
+
+            </div>
+
+
+            <!-- Categories -->
+
+            <div class="event-filters">
+
+                <button class="category-pill active">
+                    All
+                </button>
+
+                <button class="category-pill">
+                    💻 Technology
+                </button>
+
+                <button class="category-pill">
+                    ⚽ Sports
+                </button>
+
+                <button class="category-pill">
+                    🎭 Cultural
+                </button>
+
+                <button class="category-pill">
+                    📚 Academic
+                </button>
+
+                <button class="category-pill">
+                    🎤 Workshops
+                </button>
+
+                <button class="category-pill">
+                    🎨 Others
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= EVENTS ================= -->
+
+    <main class="events-page">
+
+        <div class="container">
+
+            <div class="events-page-heading">
+
+                <div>
+
+                    <h2>
+                        Upcoming Events
+                    </h2>
+
+                    <p>
+                        Find something interesting and join the community.
+                    </p>
+
+                </div>
+
+                <span class="event-count">
+                    6 Events
+                </span>
+
+            </div>
+
+
+            <!-- ================= EVENT GRID ================= -->
+
+            <div class="events-grid">
+
+
+                <!-- EVENT 1 : FACULTY EVENT -->
+
+                <div class="event-card">
+
+                    <div
+                        class="card-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80');"
+                    >
+
+                        <span class="faculty-tag">
+                            ⭐ FACULTY EVENT
+                        </span>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <span class="card-category">
+                            TECHNOLOGY
+                        </span>
+
+                        <h3 class="card-title">
+                            AI & Machine Learning Fundamentals
+                        </h3>
+
+                        <div class="card-meta">
+
+                            <div class="meta-item">
+                                📅 Aug 28, 2026
+                            </div>
+
+                            <div class="meta-item">
+                                ⏰ 10:00 AM - 1:00 PM
+                            </div>
+
+                            <div class="meta-item">
+                                📍 Block 34, Room 402
+                            </div>
+
+                            <div class="meta-item">
+                                👥 72 / 100 Joined
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer">
+
+                            <button class="btn btn-outline">
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EVENT 2 : STUDENT EVENT -->
+
+                <div class="event-card">
+
+                    <div
+                        class="card-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1543351611-58f69d7c1781?auto=format&fit=crop&w=800&q=80');"
+                    >
+                    </div>
+
+                    <div class="card-body">
+
+                        <span class="card-category">
+                            SPORTS
+                        </span>
+
+                        <h3 class="card-title">
+                            Inter-Hostel Football Tournament
+                        </h3>
+
+                        <div class="card-meta">
+
+                            <div class="meta-item">
+                                📅 Sep 02, 2026
+                            </div>
+
+                            <div class="meta-item">
+                                ⏰ 4:00 PM - 7:00 PM
+                            </div>
+
+                            <div class="meta-item">
+                                📍 Main Ground
+                            </div>
+
+                            <div class="meta-item">
+                                👥 45 / 80 Joined
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer">
+
+                            <button class="btn btn-outline">
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EVENT 3 : FACULTY EVENT -->
+
+                <div class="event-card">
+
+                    <div
+                        class="card-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=800&q=80');"
+                    >
+
+                        <span class="faculty-tag">
+                            ⭐ FACULTY EVENT
+                        </span>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <span class="card-category">
+                            CULTURAL
+                        </span>
+
+                        <h3 class="card-title">
+                            Open Mic Night: Poetry & Music
+                        </h3>
+
+                        <div class="card-meta">
+
+                            <div class="meta-item">
+                                📅 Sep 05, 2026
+                            </div>
+
+                            <div class="meta-item">
+                                ⏰ 6:00 PM - 9:00 PM
+                            </div>
+
+                            <div class="meta-item">
+                                📍 Student Center
+                            </div>
+
+                            <div class="meta-item">
+                                👥 35 / 50 Joined
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer">
+
+                            <button class="btn btn-outline">
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EVENT 4 : STUDENT EVENT -->
+
+                <div class="event-card">
+
+                    <div
+                        class="card-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80');"
+                    >
+                    </div>
+
+                    <div class="card-body">
+
+                        <span class="card-category">
+                            TECHNOLOGY
+                        </span>
+
+                        <h3 class="card-title">
+                            Web Development Workshop
+                        </h3>
+
+                        <div class="card-meta">
+
+                            <div class="meta-item">
+                                📅 Sep 08, 2026
+                            </div>
+
+                            <div class="meta-item">
+                                ⏰ 2:00 PM - 5:00 PM
+                            </div>
+
+                            <div class="meta-item">
+                                📍 Block 38, Lab 204
+                            </div>
+
+                            <div class="meta-item">
+                                👥 38 / 60 Joined
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer">
+
+                            <button class="btn btn-outline">
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EVENT 5 : STUDENT EVENT -->
+
+                <div class="event-card">
+
+                    <div
+                        class="card-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80');"
+                    >
+                    </div>
+
+                    <div class="card-body">
+
+                        <span class="card-category">
+                            ACADEMIC
+                        </span>
+
+                        <h3 class="card-title">
+                            Competitive Programming Contest
+                        </h3>
+
+                        <div class="card-meta">
+
+                            <div class="meta-item">
+                                📅 Sep 12, 2026
+                            </div>
+
+                            <div class="meta-item">
+                                ⏰ 11:00 AM - 2:00 PM
+                            </div>
+
+                            <div class="meta-item">
+                                📍 Block 32, Lab 101
+                            </div>
+
+                            <div class="meta-item">
+                                👥 84 / 120 Joined
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer">
+
+                            <button class="btn btn-outline">
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EVENT 6 : FACULTY EVENT -->
+
+                <div class="event-card">
+
+                    <div
+                        class="card-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=800&q=80');"
+                    >
+
+                        <span class="faculty-tag">
+                            ⭐ FACULTY EVENT
+                        </span>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <span class="card-category">
+                            WORKSHOPS
+                        </span>
+
+                        <h3 class="card-title">
+                            Career & Placement Preparation Workshop
+                        </h3>
+
+                        <div class="card-meta">
+
+                            <div class="meta-item">
+                                📅 Sep 15, 2026
+                            </div>
+
+                            <div class="meta-item">
+                                ⏰ 3:00 PM - 5:00 PM
+                            </div>
+
+                            <div class="meta-item">
+                                📍 Seminar Hall
+                            </div>
+
+                            <div class="meta-item">
+                                👥 120 / 200 Joined
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer">
+
+                            <button class="btn btn-outline">
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="container">
+
+            <div class="footer-logo">
+                LPU SOCIAL
+            </div>
+
+            <p class="footer-tagline">
+                Discover • Create • Participate
+            </p>
+
+            <div class="footer-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="events.html">
+                    Events
+                </a>
+
+                <a href="#">
+                    About
+                </a>
+
+                <a href="#">
+                    Contact
+                </a>
+
+            </div>
+
+            <div class="copyright">
+                © 2026 LPU Social. All rights reserved.
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Existing JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>

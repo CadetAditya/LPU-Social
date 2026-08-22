@@ -497,3 +497,241 @@ ul {
     }
 }
 
+/* =========================================================
+   EVENTS PAGE
+   ========================================================= */
+
+/* --- EVENTS PAGE HEADER --- */
+
+.events-page-header {
+    text-align: center;
+    padding: 70px 24px 50px;
+    background-color: var(--bg);
+}
+
+.page-label {
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.events-page-header h1 {
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.2;
+    margin-bottom: 16px;
+    letter-spacing: -0.03em;
+}
+
+.events-page-header p:last-child {
+    max-width: 650px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 1.05rem;
+}
+
+
+/* --- SEARCH & FILTER SECTION --- */
+
+.events-filter-section {
+    padding: 10px 0 40px;
+}
+
+.events-search {
+    max-width: 700px;
+    margin: 0 auto 28px;
+
+    display: flex;
+    align-items: center;
+
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+
+    padding: 8px;
+
+    box-shadow: var(--shadow-md);
+}
+
+.events-search .search-icon {
+    padding-left: 16px;
+    color: var(--muted);
+    font-size: 1.2rem;
+}
+
+.events-search input {
+    flex: 1;
+
+    border: none;
+    outline: none;
+
+    padding: 12px 16px;
+
+    font-size: 1rem;
+    font-family: inherit;
+
+    background: transparent;
+    color: var(--text);
+}
+
+.events-search input::placeholder {
+    color: var(--muted);
+}
+
+.events-search .search-btn {
+    background-color: var(--primary);
+    color: white;
+
+    border: none;
+
+    padding: 12px 24px;
+
+    border-radius: var(--radius-full);
+
+    cursor: pointer;
+
+    font-family: inherit;
+    font-weight: 500;
+
+    transition: background-color 0.2s ease;
+}
+
+.events-search .search-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+
+/* --- EVENT CATEGORY FILTERS --- */
+
+.event-filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+
+    overflow-x: auto;
+
+    padding: 4px 24px 10px;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.event-filters::-webkit-scrollbar {
+    display: none;
+}
+
+.event-filters .category-pill {
+    flex-shrink: 0;
+}
+
+
+/* --- EVENTS PAGE CONTENT --- */
+
+.events-page {
+    padding: 40px 0 80px;
+}
+
+.events-page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    margin-bottom: 32px;
+}
+
+.events-page-heading h2 {
+    font-size: 1.75rem;
+    color: var(--dark);
+    margin-bottom: 6px;
+}
+
+.events-page-heading p {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.event-count {
+    color: var(--primary);
+
+    background-color: rgba(108, 76, 232, 0.08);
+
+    padding: 7px 14px;
+
+    border-radius: var(--radius-full);
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   EVENTS PAGE RESPONSIVE DESIGN
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .events-page-header {
+        padding: 50px 16px 35px;
+    }
+
+    .events-page-header h1 {
+        font-size: 2.2rem;
+    }
+
+    .events-page-header p:last-child {
+        font-size: 0.95rem;
+    }
+
+    .events-filter-section {
+        padding-bottom: 25px;
+    }
+
+    .events-search {
+        margin-left: 16px;
+        margin-right: 16px;
+
+        flex-direction: column;
+
+        border-radius: var(--radius-md);
+
+        padding: 5px;
+    }
+
+    .events-search .search-icon {
+        display: none;
+    }
+
+    .events-search input {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .events-search .search-btn {
+        width: 100%;
+        border-radius: var(--radius-md);
+    }
+
+    .event-filters {
+        justify-content: flex-start;
+    }
+
+    .events-page-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .events-page-heading h2 {
+        font-size: 1.5rem;
+    }
+
+}
+
