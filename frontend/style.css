@@ -924,3 +924,16 @@ ul {
     }
 
 }
+
+
+/* Joined Event Button */
+.join-event-btn.joined {
+    background-color: #22c55e;
+    border-color: #22c55e;
+    color: white;
+}
+
+.join-event-btn.joined:hover {
+    background-color: #16a34a;
+    border-color: #16a34a;
+}

@@ -303,3 +303,103 @@ if (eventId && eventsData[eventId]) {
     }
 
 }
+
+
+// ===============================
+// JOIN / UNJOIN EVENT
+// ===============================
+
+const joinEventBtn = document.getElementById("joinEventBtn");
+
+if (joinEventBtn) {
+
+    joinEventBtn.addEventListener("click", function () {
+
+        const participants =
+            document.getElementById("eventParticipants");
+
+        const joinedText =
+            document.getElementById("joinedText");
+
+        const remainingText =
+            document.getElementById("remainingText");
+
+
+        // Get current numbers
+        const numbers =
+            participants.textContent.match(/\d+/g);
+
+        let joined = parseInt(numbers[0]);
+        const capacity = parseInt(numbers[1]);
+
+
+        // ===============================
+        // USER IS JOINING
+        // ===============================
+
+        if (joinEventBtn.textContent.includes("Join")) {
+
+            // Check if event is full
+            if (joined >= capacity) {
+
+                alert("This event is already full!");
+
+                return;
+            }
+
+            joined++;
+
+
+            // Update count
+            participants.textContent =
+                joined + " / " + capacity + " Joined";
+
+
+            joinedText.textContent =
+                joined + " students have joined";
+
+
+            remainingText.textContent =
+                (capacity - joined) + " spots remaining";
+
+
+            // Change button
+            joinEventBtn.textContent =
+                "Unjoin Event";
+            joinEventBtn.classList.add("joined");
+
+        }
+
+
+        // ===============================
+        // USER IS UNJOINING
+        // ===============================
+
+        else {
+
+            joined--;
+
+
+            // Update count
+            participants.textContent =
+                joined + " / " + capacity + " Joined";
+
+
+            joinedText.textContent =
+                joined + " students have joined";
+
+
+            remainingText.textContent =
+                (capacity - joined) + " spots remaining";
+
+
+            // Change button back
+            joinEventBtn.textContent =
+                "Join Event";
+            joinEventBtn.classList.remove("joined");
+
+        }
+
+    });
+
+}
