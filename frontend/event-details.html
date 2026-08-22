@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LPU Social | Event Details</title>
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="container nav-container">
+
+            <a href="index.html" class="logo">
+                LPU SOCIAL
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="events.html">
+                        Events
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        Create Event
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        My Events
+                    </a>
+                </li>
+
+            </ul>
+
+
+            <div class="nav-auth" id="navAuth">
+
+                <a href="#" class="login-link">
+                    Login
+                </a>
+
+                <a href="#" class="btn btn-primary">
+                    Sign Up
+                </a>
+
+            </div>
+
+
+            <button
+                class="menu-toggle"
+                id="mobileMenuBtn"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= EVENT DETAILS ================= -->
+
+    <main class="event-details-page">
+
+        <div class="container">
+
+            <!-- Back Button -->
+
+            <a
+                href="events.html"
+                class="back-link"
+            >
+                ← Back to Events
+            </a>
+
+
+            <!-- EVENT DETAILS CARD -->
+
+            <div class="event-details-card">
+
+
+                <!-- ================= EVENT IMAGE ================= -->
+
+                <div
+                    class="event-details-image"
+                    id="eventImage"
+                >
+
+                    <!-- Faculty tag will be added by JavaScript -->
+
+                </div>
+
+
+                <!-- ================= EVENT INFORMATION ================= -->
+
+                <div class="event-details-content">
+
+
+                    <!-- CATEGORY -->
+
+                    <span
+                        class="card-category"
+                        id="eventCategory"
+                    >
+                        TECHNOLOGY
+                    </span>
+
+
+                    <!-- TITLE -->
+
+                    <h1 id="eventTitle">
+                        AI & Machine Learning Fundamentals
+                    </h1>
+
+
+                    <!-- ================= EVENT META ================= -->
+
+                    <div class="event-details-meta">
+
+
+                        <!-- DATE -->
+
+                        <div class="detail-item">
+
+                            <span class="detail-icon">
+                                📅
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Date
+                                </strong>
+
+                                <p id="eventDate">
+                                    Aug 28, 2026
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TIME -->
+
+                        <div class="detail-item">
+
+                            <span class="detail-icon">
+                                ⏰
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Time
+                                </strong>
+
+                                <p id="eventTime">
+                                    10:00 AM - 1:00 PM
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- LOCATION -->
+
+                        <div class="detail-item">
+
+                            <span class="detail-icon">
+                                📍
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Location
+                                </strong>
+
+                                <p id="eventLocation">
+                                    Block 34, Room 402
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PARTICIPANTS -->
+
+                        <div class="detail-item">
+
+                            <span class="detail-icon">
+                                👥
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Participants
+                                </strong>
+
+                                <p id="eventParticipants">
+                                    72 / 100 Joined
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================= DESCRIPTION ================= -->
+
+                    <section class="event-description">
+
+                        <h2>
+                            About This Event
+                        </h2>
+
+                        <p id="eventDescription">
+                            Learn the fundamentals of Artificial Intelligence
+                            and Machine Learning in this interactive campus
+                            workshop. The session will cover important concepts,
+                            practical examples and applications of AI and ML.
+                        </p>
+
+                    </section>
+
+
+                    <!-- ================= ORGANIZER ================= -->
+
+                    <section class="event-organizer">
+
+                        <h2>
+                            Organized By
+                        </h2>
+
+
+                        <div class="organizer-info">
+
+
+                            <div
+                                class="organizer-avatar"
+                                id="organizerAvatar"
+                            >
+                                F
+                            </div>
+
+
+                            <div>
+
+                                <h3 id="organizerName">
+                                    Faculty Organizer
+                                </h3>
+
+                                <p id="organizerRole">
+                                    Faculty Member
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- ================= JOIN SECTION ================= -->
+
+                    <div class="event-join-section">
+
+
+                        <div>
+
+                            <strong id="joinedText">
+                                72 students have joined
+                            </strong>
+
+                            <p id="remainingText">
+                                28 spots remaining
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            class="btn btn-primary join-event-btn"
+                            id="joinEventBtn"
+                        >
+                            Join Event
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="container">
+
+
+            <div class="footer-logo">
+                LPU SOCIAL
+            </div>
+
+
+            <p class="footer-tagline">
+                Discover • Create • Participate
+            </p>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="events.html">
+                    Events
+                </a>
+
+                <a href="#">
+                    About
+                </a>
+
+                <a href="#">
+                    Contact
+                </a>
+
+            </div>
+
+
+            <div class="copyright">
+                © 2026 LPU Social. All rights reserved.
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
