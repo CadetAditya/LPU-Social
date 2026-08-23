@@ -24,25 +24,56 @@ if (mobileMenuBtn) {
 
 const eventCards = document.querySelectorAll(".event-card");
 
-
 // ===============================
-// EVENT SEARCH
+// EVENT SEARCH + CATEGORY FILTER
 // ===============================
 
 const searchInput = document.getElementById("eventSearch");
 const searchBtn = document.getElementById("eventSearchBtn");
 
-function searchEvents() {
+const categoryPills = document.querySelectorAll(
+    ".event-filters .category-pill"
+);
 
-    const searchText = searchInput.value
-        .toLowerCase()
-        .trim();
+
+// Currently selected category
+let selectedCategory = "all";
+
+
+// ===============================
+// FILTER EVENTS
+// ===============================
+
+function filterEvents() {
+
+    const searchText = searchInput
+        ? searchInput.value.toLowerCase().trim()
+        : "";
 
     eventCards.forEach(function (card) {
 
         const eventText = card.textContent.toLowerCase();
 
-        if (eventText.includes(searchText)) {
+        const cardCategory = card
+            .querySelector(".card-category")
+            .textContent
+            .trim()
+            .toLowerCase();
+
+
+        // Category condition
+        const categoryMatches =
+            selectedCategory === "all" ||
+            cardCategory === selectedCategory;
+
+
+        // Search condition
+        const searchMatches =
+            eventText.includes(searchText);
+
+
+        // Both conditions must match
+        if (categoryMatches && searchMatches) {
 
             card.style.display = "flex";
 
@@ -57,22 +88,32 @@ function searchEvents() {
 }
 
 
-// Search button
+// ===============================
+// SEARCH BUTTON
+// ===============================
+
 if (searchBtn) {
 
-    searchBtn.addEventListener("click", searchEvents);
+    searchBtn.addEventListener("click", function () {
+
+        filterEvents();
+
+    });
 
 }
 
 
-// Search when pressing Enter
+// ===============================
+// SEARCH WITH ENTER
+// ===============================
+
 if (searchInput) {
 
     searchInput.addEventListener("keydown", function (event) {
 
         if (event.key === "Enter") {
 
-            searchEvents();
+            filterEvents();
 
         }
 
@@ -82,77 +123,28 @@ if (searchInput) {
 
 
 // ===============================
-// CATEGORY FILTER
+// CATEGORY BUTTONS
 // ===============================
-
-const categoryPills = document.querySelectorAll(
-    ".event-filters .category-pill"
-);
-
 
 categoryPills.forEach(function (category) {
 
     category.addEventListener("click", function () {
 
-        // Remove active class from all categories
         categoryPills.forEach(function (pill) {
 
             pill.classList.remove("active");
 
         });
 
-
-        // Add active class to selected category
         category.classList.add("active");
 
+        selectedCategory = category.dataset.category;
 
-        // Get selected category
-        const selectedCategory = category.dataset.category;
-
-
-        console.log("Selected category:", selectedCategory);
-
-
-        // Filter event cards
-        eventCards.forEach(function (card) {
-
-            const cardCategory = card
-                .querySelector(".card-category")
-                .textContent
-                .trim()
-                .toLowerCase();
-
-
-            console.log("Event category:", cardCategory);
-
-
-            // Show all events
-            if (selectedCategory === "all") {
-
-                card.style.display = "flex";
-
-            }
-
-            // Show matching category
-            else if (cardCategory === selectedCategory) {
-
-                card.style.display = "flex";
-
-            }
-
-            // Hide non-matching events
-            else {
-
-                card.style.display = "none";
-
-            }
-
-        });
+        filterEvents();
 
     });
 
 });
-
 
 
 // ===============================
