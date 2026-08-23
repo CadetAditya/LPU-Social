@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LPU Social | My Events</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="container nav-container">
+
+            <a href="index.html" class="logo">
+                LPU SOCIAL
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="events.html">Events</a>
+                </li>
+
+                <li>
+                    <a href="#">Create Event</a>
+                </li>
+
+                <li>
+                    <a href="my-events.html" class="active">
+                        My Events
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="nav-auth" id="navAuth">
+
+                <a href="#" class="login-link">
+                    Login
+                </a>
+
+                <a href="#" class="btn btn-primary">
+                    Sign Up
+                </a>
+
+            </div>
+
+            <button
+                class="menu-toggle"
+                id="mobileMenuBtn"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MY EVENTS ================= -->
+
+    <main class="events-page">
+
+        <div class="container">
+
+            <div class="events-page-heading">
+
+                <div>
+
+                    <p class="page-label">
+                        YOUR ACTIVITIES
+                    </p>
+
+                    <h1>
+                        My Events
+                    </h1>
+
+                    <p>
+                        Events you have joined.
+                    </p>
+
+                </div>
+
+                <span
+                    class="event-count"
+                    id="myEventCount"
+                >
+                    0 Events
+                </span>
+
+            </div>
+
+
+            <!-- EVENT GRID -->
+
+            <div
+                class="events-grid"
+                id="myEventsGrid"
+            >
+
+                <!-- Joined events will appear here -->
+
+            </div>
+
+
+            <!-- EMPTY MESSAGE -->
+
+            <div
+                id="noEventsMessage"
+                style="display: none; text-align: center; padding: 60px 20px;"
+            >
+
+                <h2>
+                    No Events Yet
+                </h2>
+
+                <p>
+                    You haven't joined any events yet.
+                </p>
+
+                <br>
+
+                <a
+                    href="events.html"
+                    class="btn btn-primary"
+                >
+                    Explore Events
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="container">
+
+            <div class="footer-logo">
+                LPU SOCIAL
+            </div>
+
+            <p class="footer-tagline">
+                Discover • Create • Participate
+            </p>
+
+            <div class="footer-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="events.html">
+                    Events
+                </a>
+
+                <a href="my-events.html">
+                    My Events
+                </a>
+
+            </div>
+
+            <div class="copyright">
+                © 2026 LPU Social. All rights reserved.
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
