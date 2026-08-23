@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LPU Social - Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="login-box">
+
+            <h1>LPU Social</h1>
+            <p class="subtitle">Connect. Share. Discover.</p>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+                    <label for="registrationNumber">
+                        Registration Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="registrationNumber"
+                        placeholder="Enter your registration number"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+                </div>
+
+                <div class="options">
+                    <label>
+                        <input type="checkbox" id="rememberMe">
+                        Remember me
+                    </label>
+
+                    <a href="#">Forgot Password?</a>
+                </div>
+
+                <button type="submit">Login</button>
+
+                <p id="message"></p>
+
+            </form>
+
+            <div class="register">
+                Don't have an account?
+                <a href="register.html">Create Account</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="login.js"></script>
+
+</body>
+</html>
