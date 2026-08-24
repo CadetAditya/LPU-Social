@@ -1,16 +1,59 @@
 // ===============================
-// MOBILE MENU
+// LOGGED-IN USER
+// ===============================
+
+const loggedInUser = JSON.parse(
+    localStorage.getItem("loggedInUser")
+);
+
+
+// ===============================
+// NAVIGATION
 // ===============================
 
 const mobileMenuBtn = document.getElementById("mobileMenuBtn");
 const navLinks = document.getElementById("navLinks");
 const navAuth = document.getElementById("navAuth");
 
+
+// ===============================
+// SHOW LOGGED-IN USER
+// ===============================
+
+if (loggedInUser && navAuth) {
+
+    navAuth.innerHTML = `
+        <span class="user-name">
+            Welcome, ${loggedInUser.name}
+        </span>
+
+        <button class="btn btn-primary" id="logoutBtn">
+            Logout
+        </button>
+    `;
+
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    logoutBtn.addEventListener("click", function () {
+
+        localStorage.removeItem("loggedInUser");
+
+        window.location.href = "login.html";
+
+    });
+}
+
+
+// ===============================
+// MOBILE MENU
+// ===============================
+
 if (mobileMenuBtn) {
 
     mobileMenuBtn.addEventListener("click", function () {
 
         navLinks.classList.toggle("active-mobile");
+
         navAuth.classList.toggle("active-mobile");
 
     });
@@ -24,16 +67,21 @@ if (mobileMenuBtn) {
 
 const eventCards = document.querySelectorAll(".event-card");
 
+
 // ===============================
 // EVENT SEARCH + CATEGORY FILTER
 // ===============================
 
-const searchInput = document.getElementById("eventSearch");
-const searchBtn = document.getElementById("eventSearchBtn");
+const searchInput =
+    document.getElementById("eventSearch");
 
-const categoryPills = document.querySelectorAll(
-    ".event-filters .category-pill"
-);
+const searchBtn =
+    document.getElementById("eventSearchBtn");
+
+const categoryPills =
+    document.querySelectorAll(
+        ".event-filters .category-pill"
+    );
 
 
 // Currently selected category
@@ -52,13 +100,18 @@ function filterEvents() {
 
     eventCards.forEach(function (card) {
 
-        const eventText = card.textContent.toLowerCase();
+        const eventText =
+            card.textContent.toLowerCase();
 
-        const cardCategory = card
-            .querySelector(".card-category")
-            .textContent
-            .trim()
-            .toLowerCase();
+        const categoryElement =
+            card.querySelector(".card-category");
+
+        const cardCategory =
+            categoryElement
+                ? categoryElement.textContent
+                    .trim()
+                    .toLowerCase()
+                : "";
 
 
         // Category condition
@@ -138,7 +191,8 @@ categoryPills.forEach(function (category) {
 
         category.classList.add("active");
 
-        selectedCategory = category.dataset.category;
+        selectedCategory =
+            category.dataset.category;
 
         filterEvents();
 
@@ -152,7 +206,10 @@ categoryPills.forEach(function (category) {
 // ===============================
 
 function viewEvent(eventId) {
-    window.location.href = "event-details.html?id=" + eventId;
+
+    window.location.href =
+        "event-details.html?id=" + eventId;
+
 }
 
 
@@ -163,75 +220,152 @@ function viewEvent(eventId) {
 const eventsData = {
 
     "ai-ml": {
+
         category: "TECHNOLOGY",
+
         title: "AI & Machine Learning Fundamentals",
+
         date: "Aug 28, 2026",
+
         time: "10:00 AM - 1:00 PM",
+
         location: "Block 34, Room 402",
+
         joined: "72 / 100 Joined",
-        description: "Learn the fundamentals of Artificial Intelligence and Machine Learning through practical examples and interactive sessions.",
+
+        description:
+            "Learn the fundamentals of Artificial Intelligence and Machine Learning through practical examples and interactive sessions.",
+
         organizer: "LPU Faculty",
-        image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80"
+
+        image:
+            "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80"
+
     },
+
 
     "football": {
+
         category: "SPORTS",
+
         title: "Inter-Hostel Football Tournament",
+
         date: "Sep 02, 2026",
+
         time: "4:00 PM - 7:00 PM",
+
         location: "Main Ground",
+
         joined: "45 / 80 Joined",
-        description: "Compete with students from different hostels and showcase your football skills in the inter-hostel tournament.",
+
+        description:
+            "Compete with students from different hostels and showcase your football skills in the inter-hostel tournament.",
+
         organizer: "LPU Sports Committee",
-        image: "https://images.unsplash.com/photo-1543351611-58f69d7c1781?auto=format&fit=crop&w=1200&q=80"
+
+        image:
+            "https://images.unsplash.com/photo-1543351611-58f69d7c1781?auto=format&fit=crop&w=1200&q=80"
+
     },
+
 
     "open-mic": {
+
         category: "CULTURAL",
+
         title: "Open Mic Night: Poetry & Music",
+
         date: "Sep 05, 2026",
+
         time: "6:00 PM - 9:00 PM",
+
         location: "Student Center",
+
         joined: "35 / 50 Joined",
-        description: "An evening of poetry, music and creative performances where students can showcase their talent.",
+
+        description:
+            "An evening of poetry, music and creative performances where students can showcase their talent.",
+
         organizer: "LPU Cultural Club",
-        image: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=1200&q=80"
+
+        image:
+            "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=1200&q=80"
+
     },
+
 
     "web-development": {
+
         category: "TECHNOLOGY",
+
         title: "Web Development Workshop",
+
         date: "Sep 08, 2026",
+
         time: "2:00 PM - 5:00 PM",
+
         location: "Block 38, Lab 204",
+
         joined: "38 / 60 Joined",
-        description: "Build your web development skills through a practical workshop covering modern web technologies.",
+
+        description:
+            "Build your web development skills through a practical workshop covering modern web technologies.",
+
         organizer: "LPU Coding Club",
-        image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80"
+
+        image:
+            "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80"
+
     },
+
 
     "programming": {
+
         category: "ACADEMIC",
+
         title: "Competitive Programming Contest",
+
         date: "Sep 12, 2026",
+
         time: "11:00 AM - 2:00 PM",
+
         location: "Block 32, Lab 101",
+
         joined: "84 / 120 Joined",
-        description: "Test your problem-solving and programming skills by competing against fellow students.",
+
+        description:
+            "Test your problem-solving and programming skills by competing against fellow students.",
+
         organizer: "LPU Programming Club",
-        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
+
+        image:
+            "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
+
     },
 
+
     "placement-workshop": {
+
         category: "WORKSHOPS",
+
         title: "Career & Placement Preparation Workshop",
+
         date: "Sep 15, 2026",
+
         time: "3:00 PM - 5:00 PM",
+
         location: "Seminar Hall",
+
         joined: "120 / 200 Joined",
-        description: "Prepare for upcoming placement opportunities with guidance on resumes, interviews and career preparation.",
+
+        description:
+            "Prepare for upcoming placement opportunities with guidance on resumes, interviews and career preparation.",
+
         organizer: "LPU Placement Cell",
-        image: "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=1200&q=80"
+
+        image:
+            "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=1200&q=80"
+
     }
 
 };
@@ -241,57 +375,115 @@ const eventsData = {
 // LOAD EVENT DETAILS
 // ===============================
 
-const urlParams = new URLSearchParams(window.location.search);
-const eventId = urlParams.get("id");
+const urlParams =
+    new URLSearchParams(window.location.search);
+
+const eventId =
+    urlParams.get("id");
+
 
 if (eventId && eventsData[eventId]) {
 
     const event = eventsData[eventId];
 
-    const category = document.getElementById("eventCategory");
-    const title = document.getElementById("eventTitle");
-    const date = document.getElementById("eventDate");
-    const time = document.getElementById("eventTime");
-    const location = document.getElementById("eventLocation");
-    const participants = document.getElementById("eventParticipants");
-    const description = document.getElementById("eventDescription");
-    const organizer = document.getElementById("organizerName");
-    const image = document.getElementById("eventImage");
+
+    const category =
+        document.getElementById("eventCategory");
+
+    const title =
+        document.getElementById("eventTitle");
+
+    const date =
+        document.getElementById("eventDate");
+
+    const time =
+        document.getElementById("eventTime");
+
+    const location =
+        document.getElementById("eventLocation");
+
+    const participants =
+        document.getElementById("eventParticipants");
+
+    const description =
+        document.getElementById("eventDescription");
+
+    const organizer =
+        document.getElementById("organizerName");
+
+    const image =
+        document.getElementById("eventImage");
+
 
     if (category) {
-        category.textContent = event.category;
+
+        category.textContent =
+            event.category;
+
     }
+
 
     if (title) {
-        title.textContent = event.title;
+
+        title.textContent =
+            event.title;
+
     }
+
 
     if (date) {
-        date.textContent = event.date;
+
+        date.textContent =
+            event.date;
+
     }
+
 
     if (time) {
-        time.textContent = event.time;
+
+        time.textContent =
+            event.time;
+
     }
+
 
     if (location) {
-        location.textContent = event.location;
+
+        location.textContent =
+            event.location;
+
     }
+
 
     if (participants) {
-        participants.textContent = event.joined;
+
+        participants.textContent =
+            event.joined;
+
     }
+
 
     if (description) {
-        description.textContent = event.description;
+
+        description.textContent =
+            event.description;
+
     }
+
 
     if (organizer) {
-        organizer.textContent = event.organizer;
+
+        organizer.textContent =
+            event.organizer;
+
     }
 
+
     if (image) {
-        image.style.backgroundImage = `url('${event.image}')`;
+
+        image.style.backgroundImage =
+            `url('${event.image}')`;
+
     }
 
 }
@@ -301,97 +493,142 @@ if (eventId && eventsData[eventId]) {
 // JOIN / UNJOIN EVENT
 // ===============================
 
-const joinEventBtn = document.getElementById("joinEventBtn");
+const joinEventBtn =
+    document.getElementById("joinEventBtn");
+
 
 if (joinEventBtn) {
 
-    joinEventBtn.addEventListener("click", function () {
-
-        const participants =
-            document.getElementById("eventParticipants");
-
-        const joinedText =
-            document.getElementById("joinedText");
-
-        const remainingText =
-            document.getElementById("remainingText");
+    joinEventBtn.addEventListener(
+        "click",
+        function () {
 
 
-        // Get current numbers
-        const numbers =
-            participants.textContent.match(/\d+/g);
-
-        let joined = parseInt(numbers[0]);
-        const capacity = parseInt(numbers[1]);
+            const participants =
+                document.getElementById(
+                    "eventParticipants"
+                );
 
 
-        // ===============================
-        // USER IS JOINING
-        // ===============================
+            const joinedText =
+                document.getElementById(
+                    "joinedText"
+                );
 
-        if (joinEventBtn.textContent.includes("Join")) {
 
-            // Check if event is full
-            if (joined >= capacity) {
+            const remainingText =
+                document.getElementById(
+                    "remainingText"
+                );
 
-                alert("This event is already full!");
 
-                return;
+            // Get current numbers
+            const numbers =
+                participants.textContent.match(/\d+/g);
+
+
+            let joined =
+                parseInt(numbers[0]);
+
+
+            const capacity =
+                parseInt(numbers[1]);
+
+
+            // ===============================
+            // USER IS JOINING
+            // ===============================
+
+            if (
+                joinEventBtn.textContent
+                    .includes("Join")
+            ) {
+
+
+                // Check if event is full
+                if (joined >= capacity) {
+
+                    alert(
+                        "This event is already full!"
+                    );
+
+                    return;
+
+                }
+
+
+                joined++;
+
+
+                // Update count
+                participants.textContent =
+                    joined +
+                    " / " +
+                    capacity +
+                    " Joined";
+
+
+                joinedText.textContent =
+                    joined +
+                    " students have joined";
+
+
+                remainingText.textContent =
+                    (capacity - joined) +
+                    " spots remaining";
+
+
+                // Change button
+                joinEventBtn.textContent =
+                    "Unjoin Event";
+
+
+                joinEventBtn.classList.add(
+                    "joined"
+                );
+
             }
 
-            joined++;
+
+            // ===============================
+            // USER IS UNJOINING
+            // ===============================
+
+            else {
+
+                joined--;
 
 
-            // Update count
-            participants.textContent =
-                joined + " / " + capacity + " Joined";
+                // Update count
+                participants.textContent =
+                    joined +
+                    " / " +
+                    capacity +
+                    " Joined";
 
 
-            joinedText.textContent =
-                joined + " students have joined";
+                joinedText.textContent =
+                    joined +
+                    " students have joined";
 
 
-            remainingText.textContent =
-                (capacity - joined) + " spots remaining";
+                remainingText.textContent =
+                    (capacity - joined) +
+                    " spots remaining";
 
 
-            // Change button
-            joinEventBtn.textContent =
-                "Unjoin Event";
-            joinEventBtn.classList.add("joined");
-
-        }
+                // Change button back
+                joinEventBtn.textContent =
+                    "Join Event";
 
 
-        // ===============================
-        // USER IS UNJOINING
-        // ===============================
+                joinEventBtn.classList.remove(
+                    "joined"
+                );
 
-        else {
-
-            joined--;
-
-
-            // Update count
-            participants.textContent =
-                joined + " / " + capacity + " Joined";
-
-
-            joinedText.textContent =
-                joined + " students have joined";
-
-
-            remainingText.textContent =
-                (capacity - joined) + " spots remaining";
-
-
-            // Change button back
-            joinEventBtn.textContent =
-                "Join Event";
-            joinEventBtn.classList.remove("joined");
+            }
 
         }
-
-    });
+    );
 
 }

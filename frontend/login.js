@@ -29,19 +29,25 @@ loginForm.addEventListener("submit", async function (event) {
             }
         );
 
-        if (response.ok) {
+       if (response.ok) {
 
-            const data = await response.json();
+    const data = await response.json();
 
-            message.textContent = "Login successful!";
-            message.style.color = "green";
+    // Store the logged-in user's information
+    localStorage.setItem(
+        "loggedInUser",
+        JSON.stringify(data)
+    );
 
-            console.log("Logged in user:", data);
+    message.textContent = "Login successful!";
+    message.style.color = "green";
 
-            // Later we will redirect:
-            // window.location.href = "home.html";
-
-        } else {
+    // Go to the existing index page
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 500);
+}
+else {
 
             message.textContent =
                 "Invalid registration number or password";
