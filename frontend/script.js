@@ -1,10 +1,4 @@
-// ===============================
-// LOGGED-IN USER
-// ===============================
 
-const loggedInUser = JSON.parse(
-    localStorage.getItem("loggedInUser")
-);
 
 
 // ===============================
@@ -16,32 +10,7 @@ const navLinks = document.getElementById("navLinks");
 const navAuth = document.getElementById("navAuth");
 
 
-// ===============================
-// SHOW LOGGED-IN USER
-// ===============================
 
-if (loggedInUser && navAuth) {
-
-    navAuth.innerHTML = `
-        <span class="user-name">
-            Welcome, ${loggedInUser.name}
-        </span>
-
-        <button class="btn btn-primary" id="logoutBtn">
-            Logout
-        </button>
-    `;
-
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    logoutBtn.addEventListener("click", function () {
-
-        localStorage.removeItem("loggedInUser");
-
-        window.location.href = "login.html";
-
-    });
-}
 
 
 // ===============================
