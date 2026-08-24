@@ -1,0 +1,126 @@
+.create-event-page {
+    min-height: 80vh;
+    padding: 60px 20px;
+    background: #f7f8fc;
+}
+
+.create-event-container {
+    width: 800px;
+    max-width: 100%;
+    margin: auto;
+    padding: 40px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.create-event-header {
+    margin-bottom: 35px;
+}
+
+.page-label {
+    color: #5a4fcf;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.create-event-header h1 {
+    margin: 8px 0;
+    font-size: 32px;
+    color: #222;
+}
+
+.create-event-header p {
+    color: #666;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d5d5d5;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #5a4fcf;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 7px;
+    color: #777;
+    font-size: 13px;
+}
+
+.image-preview-container {
+    display: none;
+    margin-top: 15px;
+}
+
+.image-preview-container img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.create-event-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#message {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+
+    .create-event-container {
+        padding: 25px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .create-event-header h1 {
+        font-size: 26px;
+    }
+}
