@@ -7,16 +7,22 @@ CREATE TABLE users (
 );
 
 CREATE TABLE events (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(200) NOT NULL,
-    category VARCHAR(50) NOT NULL,
-    event_date DATE NOT NULL,
-    event_time VARCHAR(50),
-    location VARCHAR(200),
-    capacity INT NOT NULL,
-    description TEXT,
-    organizer VARCHAR(150),
-    image TEXT
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    category VARCHAR(255) NOT NULL,
+    date DATE NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    capacity INTEGER NOT NULL,
+    joined INTEGER NOT NULL DEFAULT 0,
+    description VARCHAR(2000) NOT NULL,
+    image TEXT,
+    organizer_id BIGINT NOT NULL,
+
+    CONSTRAINT fk_event_organizer
+        FOREIGN KEY (organizer_id)
+        REFERENCES users(id)
 );
 
 CREATE TABLE event_participants (

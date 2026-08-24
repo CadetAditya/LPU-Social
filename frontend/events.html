@@ -12,7 +12,7 @@
         rel="stylesheet">
 
     <!-- Existing stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
@@ -23,42 +23,61 @@
 
         <div class="container nav-container">
 
+            <!-- Logo -->
             <a href="index.html" class="logo">
                 LPU SOCIAL
             </a>
 
+            <!-- Navigation -->
             <ul class="nav-links" id="navLinks">
 
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="index.html">
+                        Home
+                    </a>
                 </li>
 
                 <li>
-                    <a href="events.html" class="active">Events</a>
+                    <a href="events.html" class="active">
+                        Events
+                    </a>
                 </li>
 
                 <li>
-                    <a href="#">Create Event</a>
+                    <a href="create-event.html">
+                        Create Event
+                    </a>
                 </li>
 
                 <li>
-                    <a href="my-events.html">My Events</a>
+                    <a href="my-events.html">
+                        My Events
+                    </a>
                 </li>
 
             </ul>
 
+            <!-- Authentication section -->
             <div class="nav-auth" id="navAuth">
 
-                <a href="#" class="login-link">
+                <!--
+                    Default state.
+                    auth.js will replace this with:
+                    Welcome, User + Logout
+                    if the user is logged in.
+                -->
+
+                <a href="login.html" class="login-link">
                     Login
                 </a>
 
-                <a href="#" class="btn btn-primary">
+                <a href="registration.html" class="btn btn-primary">
                     Sign Up
                 </a>
 
             </div>
 
+            <!-- Mobile menu -->
             <button class="menu-toggle" id="mobileMenuBtn">
                 ☰
             </button>
@@ -121,37 +140,41 @@
 
             <!-- Categories -->
 
-           <div class="event-filters">
+            <div class="event-filters">
 
-    <button class="category-pill active" data-category="all">
-        All
-    </button>
+                <button class="category-pill active" data-category="all">
+                    All
+                </button>
 
-    <button class="category-pill" data-category="technology">
-        💻 Technology
-    </button>
+                <button class="category-pill" data-category="technology">
+                    💻 Technology
+                </button>
 
-    <button class="category-pill" data-category="sports">
-        ⚽ Sports
-    </button>
+                <button class="category-pill" data-category="sports">
+                    ⚽ Sports
+                </button>
 
-    <button class="category-pill" data-category="cultural">
-        🎭 Cultural
-    </button>
+                <button class="category-pill" data-category="cultural">
+                    🎭 Cultural
+                </button>
 
-    <button class="category-pill" data-category="academic">
-        📚 Academic
-    </button>
+                <button class="category-pill" data-category="academic">
+                    📚 Academic
+                </button>
 
-    <button class="category-pill" data-category="workshops">
-        🎤 Workshops
-    </button>
+                <button class="category-pill" data-category="workshops">
+                    🎤 Workshops
+                </button>
 
-    <button class="category-pill" data-category="others">
-        🎨 Others
-    </button>
+                <button class="category-pill" data-category="others">
+                    🎨 Others
+                </button>
 
-</div>
+            </div>
+
+        </div>
+
+    </section>
 
 
     <!-- ================= EVENTS ================= -->
@@ -159,6 +182,8 @@
     <main class="events-page">
 
         <div class="container">
+
+            <!-- Page heading -->
 
             <div class="events-page-heading">
 
@@ -186,7 +211,7 @@
             <div class="events-grid">
 
 
-                <!-- EVENT 1 : FACULTY EVENT -->
+                <!-- ================= EVENT 1 ================= -->
 
                 <div class="event-card">
 
@@ -233,8 +258,11 @@
 
                         <div class="card-footer">
 
-                            <button class="btn btn-outline view-details-btn" onclick="viewEvent('ai-ml')">
-                                                  View Details
+                            <button
+                                class="btn btn-outline view-details-btn"
+                                onclick="viewEvent('ai-ml')"
+                            >
+                                View Details
                             </button>
 
                         </div>
@@ -244,7 +272,7 @@
                 </div>
 
 
-                <!-- EVENT 2 : STUDENT EVENT -->
+                <!-- ================= EVENT 2 ================= -->
 
                 <div class="event-card">
 
@@ -286,8 +314,11 @@
 
                         <div class="card-footer">
 
-                            <button class="btn btn-outline view-details-btn" onclick="viewEvent('football')">
-                                 View Details
+                            <button
+                                class="btn btn-outline view-details-btn"
+                                onclick="viewEvent('football')"
+                            >
+                                View Details
                             </button>
 
                         </div>
@@ -297,7 +328,7 @@
                 </div>
 
 
-                <!-- EVENT 3 : FACULTY EVENT -->
+                <!-- ================= EVENT 3 ================= -->
 
                 <div class="event-card">
 
@@ -344,7 +375,10 @@
 
                         <div class="card-footer">
 
-                            <button class="btn btn-outline view-details-btn" onclick="viewEvent('open-mic')">
+                            <button
+                                class="btn btn-outline view-details-btn"
+                                onclick="viewEvent('open-mic')"
+                            >
                                 View Details
                             </button>
 
@@ -355,7 +389,7 @@
                 </div>
 
 
-                <!-- EVENT 4 : STUDENT EVENT -->
+                <!-- ================= EVENT 4 ================= -->
 
                 <div class="event-card">
 
@@ -397,7 +431,10 @@
 
                         <div class="card-footer">
 
-                            <button class="btn btn-outline view-details-btn" onclick="viewEvent('web-development')">
+                            <button
+                                class="btn btn-outline view-details-btn"
+                                onclick="viewEvent('web-development')"
+                            >
                                 View Details
                             </button>
 
@@ -408,7 +445,7 @@
                 </div>
 
 
-                <!-- EVENT 5 : STUDENT EVENT -->
+                <!-- ================= EVENT 5 ================= -->
 
                 <div class="event-card">
 
@@ -450,7 +487,10 @@
 
                         <div class="card-footer">
 
-                            <button class="btn btn-outline view-details-btn" onclick="viewEvent('programming')">
+                            <button
+                                class="btn btn-outline view-details-btn"
+                                onclick="viewEvent('programming')"
+                            >
                                 View Details
                             </button>
 
@@ -461,7 +501,7 @@
                 </div>
 
 
-                <!-- EVENT 6 : FACULTY EVENT -->
+                <!-- ================= EVENT 6 ================= -->
 
                 <div class="event-card">
 
@@ -508,7 +548,10 @@
 
                         <div class="card-footer">
 
-                            <button class="btn btn-outline view-details-btn" onclick="viewEvent('placement-workshop')">
+                            <button
+                                class="btn btn-outline view-details-btn"
+                                onclick="viewEvent('placement-workshop')"
+                            >
                                 View Details
                             </button>
 
@@ -569,8 +612,13 @@
     </footer>
 
 
-    <!-- Existing JavaScript -->
-    <script src="script.js"></script>
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <!-- Authentication -->
+    <script src="./auth.js"></script>
+
+    <!-- Main events JavaScript -->
+    <script src="./script.js"></script>
 
 </body>
 

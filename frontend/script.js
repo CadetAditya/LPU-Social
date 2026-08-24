@@ -1,23 +1,53 @@
+// ============================================================
+// LPU SOCIAL - MAIN SCRIPT
+// ============================================================
+
+const API_URL = "http://localhost:8080/api/events";
 
 
+// ============================================================
+// PAGE LOAD
+// ============================================================
 
-// ===============================
-// NAVIGATION
-// ===============================
+document.addEventListener("DOMContentLoaded", function () {
 
-const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-const navLinks = document.getElementById("navLinks");
-const navAuth = document.getElementById("navAuth");
+    setupMobileMenu();
+
+    // If this is Events page
+    if (document.querySelector(".events-grid")) {
+        loadEvents();
+    }
+
+    // If this is Event Details page
+    if (document.getElementById("eventTitle")) {
+        loadEventDetails();
+    }
+
+    setupSearchAndFilters();
+
+});
 
 
-
-
-
-// ===============================
+// ============================================================
 // MOBILE MENU
-// ===============================
+// ============================================================
 
-if (mobileMenuBtn) {
+function setupMobileMenu() {
+
+    const mobileMenuBtn =
+        document.getElementById("mobileMenuBtn");
+
+    const navLinks =
+        document.getElementById("navLinks");
+
+    const navAuth =
+        document.getElementById("navAuth");
+
+
+    if (!mobileMenuBtn || !navLinks || !navAuth) {
+        return;
+    }
+
 
     mobileMenuBtn.addEventListener("click", function () {
 
@@ -30,149 +60,541 @@ if (mobileMenuBtn) {
 }
 
 
-// ===============================
-// EVENTS
-// ===============================
+// ============================================================
+// LOAD EVENTS FROM SPRING BOOT
+// ============================================================
 
-const eventCards = document.querySelectorAll(".event-card");
+async function loadEvents() {
+
+    const eventsGrid =
+        document.querySelector(".events-grid");
 
 
-// ===============================
-// EVENT SEARCH + CATEGORY FILTER
-// ===============================
+    if (!eventsGrid) {
+        return;
+    }
 
-const searchInput =
-    document.getElementById("eventSearch");
 
-const searchBtn =
-    document.getElementById("eventSearchBtn");
+    try {
 
-const categoryPills =
-    document.querySelectorAll(
-        ".event-filters .category-pill"
+        console.log("Loading events from:", API_URL);
+
+
+        const response =
+            await fetch(API_URL);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load events. Status: " +
+                response.status
+            );
+
+        }
+
+
+        const events =
+            await response.json();
+
+
+        console.log("Events received from backend:", events);
+
+
+        renderEvents(events);
+
+
+    } catch (error) {
+
+        console.error(
+            "Error loading events:",
+            error
+        );
+
+
+        eventsGrid.innerHTML = `
+            <div style="
+                grid-column: 1 / -1;
+                text-align: center;
+                padding: 60px 20px;
+            ">
+
+                <h2>Unable to load events</h2>
+
+                <p>
+                    Please make sure the Spring Boot backend
+                    is running on port 8080.
+                </p>
+
+                <p style="color:red;">
+                    ${error.message}
+                </p>
+
+            </div>
+        `;
+
+    }
+
+}
+
+
+// ============================================================
+// RENDER EVENTS
+// ============================================================
+
+function renderEvents(events) {
+
+    const eventsGrid =
+        document.querySelector(".events-grid");
+
+
+    if (!eventsGrid) {
+        return;
+    }
+
+
+    // Remove old hardcoded events
+    eventsGrid.innerHTML = "";
+
+
+    // Update event count
+    updateEventCount(events.length);
+
+
+    // No events
+    if (!events || events.length === 0) {
+
+        eventsGrid.innerHTML = `
+
+            <div style="
+                grid-column: 1 / -1;
+                text-align: center;
+                padding: 60px 20px;
+            ">
+
+                <h2>No Events Available</h2>
+
+                <p>
+                    There are currently no events.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    // Create cards
+    events.forEach(function (event) {
+
+        const card =
+            createEventCard(event);
+
+
+        eventsGrid.appendChild(card);
+
+    });
+
+
+    // Re-apply filters
+    filterEvents();
+
+}
+
+
+// ============================================================
+// CREATE EVENT CARD
+// ============================================================
+
+function createEventCard(event) {
+
+    const card =
+        document.createElement("div");
+
+
+    card.className =
+        "event-card";
+
+
+    // Event image
+    let imageHTML = "";
+
+
+    if (event.image && event.image.trim() !== "") {
+
+        imageHTML = `
+            <div
+                class="card-image"
+                style="
+                    background-image:
+                    url('${escapeAttribute(event.image)}');
+                "
+            >
+                <span class="faculty-tag">
+                    📅 CAMPUS EVENT
+                </span>
+            </div>
+        `;
+
+    } else {
+
+        imageHTML = `
+            <div
+                class="card-image"
+                style="
+                    background:
+                    linear-gradient(
+                        135deg,
+                        #6c4ce8,
+                        #8f70ff
+                    );
+                "
+            >
+                <span class="faculty-tag">
+                    📅 CAMPUS EVENT
+                </span>
+            </div>
+        `;
+
+    }
+
+
+    // Category
+    const category =
+        event.category
+            ? event.category.toUpperCase()
+            : "GENERAL";
+
+
+    // Date
+    const formattedDate =
+        formatDate(event.date);
+
+
+    // Start time
+    const startTime =
+        formatTime(event.start_time);
+
+
+    // End time
+    const endTime =
+        formatTime(event.end_time);
+
+
+    // Joined participants
+    const joined =
+        event.joined != null
+            ? event.joined
+            : 0;
+
+
+    // Capacity
+    const capacity =
+        event.capacity != null
+            ? event.capacity
+            : 0;
+
+
+    card.innerHTML = `
+
+        ${imageHTML}
+
+        <div class="card-body">
+
+            <span class="card-category">
+                ${escapeHTML(category)}
+            </span>
+
+
+            <h3 class="card-title">
+                ${escapeHTML(event.title || "Untitled Event")}
+            </h3>
+
+
+            <div class="card-meta">
+
+                <div class="meta-item">
+                    📅 ${escapeHTML(formattedDate)}
+                </div>
+
+
+                <div class="meta-item">
+                    ⏰ ${escapeHTML(startTime)}
+                    ${endTime ? " - " + escapeHTML(endTime) : ""}
+                </div>
+
+
+                <div class="meta-item">
+                    📍 ${escapeHTML(event.location || "Location not specified")}
+                </div>
+
+
+                <div class="meta-item">
+                    👥 ${joined} / ${capacity} Joined
+                </div>
+
+            </div>
+
+
+            <div class="card-footer">
+
+                <button
+                    class="btn btn-outline view-details-btn"
+                    onclick="viewEvent(${event.id})"
+                >
+                    View Details
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    return card;
+
+}
+
+
+// ============================================================
+// EVENT COUNT
+// ============================================================
+
+function updateEventCount(count) {
+
+    const eventCount =
+        document.querySelector(".event-count");
+
+
+    if (!eventCount) {
+        return;
+    }
+
+
+    eventCount.textContent =
+        count + (count === 1 ? " Event" : " Events");
+
+}
+
+
+// ============================================================
+// SEARCH + FILTER SETUP
+// ============================================================
+
+function setupSearchAndFilters() {
+
+    const searchInput =
+        document.getElementById("eventSearch");
+
+
+    const searchBtn =
+        document.getElementById("eventSearchBtn");
+
+
+    const categoryPills =
+        document.querySelectorAll(
+            ".event-filters .category-pill"
+        );
+
+
+    // Search button
+    if (searchBtn) {
+
+        searchBtn.addEventListener(
+            "click",
+            filterEvents
+        );
+
+    }
+
+
+    // Search using Enter
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Enter") {
+
+                    filterEvents();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    // Category buttons
+    categoryPills.forEach(
+        function (category) {
+
+            category.addEventListener(
+                "click",
+                function () {
+
+                    categoryPills.forEach(
+                        function (pill) {
+
+                            pill.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    category.classList.add(
+                        "active"
+                    );
+
+
+                    filterEvents();
+
+                }
+            );
+
+        }
     );
 
-
-// Currently selected category
-let selectedCategory = "all";
+}
 
 
-// ===============================
+// ============================================================
 // FILTER EVENTS
-// ===============================
+// ============================================================
 
 function filterEvents() {
 
-    const searchText = searchInput
-        ? searchInput.value.toLowerCase().trim()
-        : "";
-
-    eventCards.forEach(function (card) {
-
-        const eventText =
-            card.textContent.toLowerCase();
-
-        const categoryElement =
-            card.querySelector(".card-category");
-
-        const cardCategory =
-            categoryElement
-                ? categoryElement.textContent
-                    .trim()
-                    .toLowerCase()
-                : "";
+    const searchInput =
+        document.getElementById("eventSearch");
 
 
-        // Category condition
-        const categoryMatches =
-            selectedCategory === "all" ||
-            cardCategory === selectedCategory;
+    const searchText =
+        searchInput
+            ? searchInput.value
+                .toLowerCase()
+                .trim()
+            : "";
 
 
-        // Search condition
-        const searchMatches =
-            eventText.includes(searchText);
+    const activeCategory =
+        document.querySelector(
+            ".event-filters .category-pill.active"
+        );
 
 
-        // Both conditions must match
-        if (categoryMatches && searchMatches) {
-
-            card.style.display = "flex";
-
-        } else {
-
-            card.style.display = "none";
-
-        }
-
-    });
-
-}
+    let selectedCategory = "all";
 
 
-// ===============================
-// SEARCH BUTTON
-// ===============================
-
-if (searchBtn) {
-
-    searchBtn.addEventListener("click", function () {
-
-        filterEvents();
-
-    });
-
-}
-
-
-// ===============================
-// SEARCH WITH ENTER
-// ===============================
-
-if (searchInput) {
-
-    searchInput.addEventListener("keydown", function (event) {
-
-        if (event.key === "Enter") {
-
-            filterEvents();
-
-        }
-
-    });
-
-}
-
-
-// ===============================
-// CATEGORY BUTTONS
-// ===============================
-
-categoryPills.forEach(function (category) {
-
-    category.addEventListener("click", function () {
-
-        categoryPills.forEach(function (pill) {
-
-            pill.classList.remove("active");
-
-        });
-
-        category.classList.add("active");
+    if (activeCategory) {
 
         selectedCategory =
-            category.dataset.category;
+            (
+                activeCategory.dataset.category ||
+                "all"
+            )
+            .toLowerCase()
+            .trim();
 
-        filterEvents();
-
-    });
-
-});
+    }
 
 
-// ===============================
+    const eventCards =
+        document.querySelectorAll(
+            ".events-grid .event-card"
+        );
+
+
+    let visibleCount = 0;
+
+
+    eventCards.forEach(
+        function (card) {
+
+            const eventText =
+                card.textContent
+                    .toLowerCase();
+
+
+            const categoryElement =
+                card.querySelector(
+                    ".card-category"
+                );
+
+
+            const cardCategory =
+                categoryElement
+                    ? categoryElement.textContent
+                        .toLowerCase()
+                        .trim()
+                    : "";
+
+
+            const categoryMatches =
+                selectedCategory === "all" ||
+                selectedCategory === "" ||
+                cardCategory === selectedCategory;
+
+
+            const searchMatches =
+                eventText.includes(searchText);
+
+
+            if (
+                categoryMatches &&
+                searchMatches
+            ) {
+
+                card.style.display = "flex";
+
+                visibleCount++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        }
+    );
+
+
+    updateVisibleEventCount(visibleCount);
+
+}
+
+
+// ============================================================
+// UPDATE VISIBLE EVENT COUNT
+// ============================================================
+
+function updateVisibleEventCount(count) {
+
+    const eventCount =
+        document.querySelector(".event-count");
+
+
+    if (!eventCount) {
+        return;
+    }
+
+
+    eventCount.textContent =
+        count +
+        (count === 1 ? " Event" : " Events");
+
+}
+
+
+// ============================================================
 // VIEW EVENT DETAILS
-// ===============================
+// ============================================================
 
 function viewEvent(eventId) {
 
@@ -182,212 +604,151 @@ function viewEvent(eventId) {
 }
 
 
-// ===============================
-// EVENT DETAILS DATA
-// ===============================
+// ============================================================
+// LOAD EVENT DETAILS
+// ============================================================
 
-const eventsData = {
+async function loadEventDetails() {
 
-    "ai-ml": {
+    const urlParams =
+        new URLSearchParams(
+            window.location.search
+        );
 
-        category: "TECHNOLOGY",
 
-        title: "AI & Machine Learning Fundamentals",
+    const eventId =
+        urlParams.get("id");
 
-        date: "Aug 28, 2026",
 
-        time: "10:00 AM - 1:00 PM",
+    // If there is no ID, do nothing
+    if (!eventId) {
+        return;
+    }
 
-        location: "Block 34, Room 402",
 
-        joined: "72 / 100 Joined",
+    try {
 
-        description:
-            "Learn the fundamentals of Artificial Intelligence and Machine Learning through practical examples and interactive sessions.",
+        console.log(
+            "Loading event details:",
+            eventId
+        );
 
-        organizer: "LPU Faculty",
 
-        image:
-            "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80"
+        const response =
+            await fetch(
+                API_URL + "/" + eventId
+            );
 
-    },
 
+        if (!response.ok) {
 
-    "football": {
+            throw new Error(
+                "Event not found. Status: " +
+                response.status
+            );
 
-        category: "SPORTS",
+        }
 
-        title: "Inter-Hostel Football Tournament",
 
-        date: "Sep 02, 2026",
+        const event =
+            await response.json();
 
-        time: "4:00 PM - 7:00 PM",
 
-        location: "Main Ground",
+        displayEventDetails(event);
 
-        joined: "45 / 80 Joined",
 
-        description:
-            "Compete with students from different hostels and showcase your football skills in the inter-hostel tournament.",
+    } catch (error) {
 
-        organizer: "LPU Sports Committee",
+        console.error(
+            "Error loading event details:",
+            error
+        );
 
-        image:
-            "https://images.unsplash.com/photo-1543351611-58f69d7c1781?auto=format&fit=crop&w=1200&q=80"
 
-    },
+        const title =
+            document.getElementById(
+                "eventTitle"
+            );
 
 
-    "open-mic": {
+        if (title) {
 
-        category: "CULTURAL",
+            title.textContent =
+                "Event not found";
 
-        title: "Open Mic Night: Poetry & Music",
-
-        date: "Sep 05, 2026",
-
-        time: "6:00 PM - 9:00 PM",
-
-        location: "Student Center",
-
-        joined: "35 / 50 Joined",
-
-        description:
-            "An evening of poetry, music and creative performances where students can showcase their talent.",
-
-        organizer: "LPU Cultural Club",
-
-        image:
-            "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=1200&q=80"
-
-    },
-
-
-    "web-development": {
-
-        category: "TECHNOLOGY",
-
-        title: "Web Development Workshop",
-
-        date: "Sep 08, 2026",
-
-        time: "2:00 PM - 5:00 PM",
-
-        location: "Block 38, Lab 204",
-
-        joined: "38 / 60 Joined",
-
-        description:
-            "Build your web development skills through a practical workshop covering modern web technologies.",
-
-        organizer: "LPU Coding Club",
-
-        image:
-            "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80"
-
-    },
-
-
-    "programming": {
-
-        category: "ACADEMIC",
-
-        title: "Competitive Programming Contest",
-
-        date: "Sep 12, 2026",
-
-        time: "11:00 AM - 2:00 PM",
-
-        location: "Block 32, Lab 101",
-
-        joined: "84 / 120 Joined",
-
-        description:
-            "Test your problem-solving and programming skills by competing against fellow students.",
-
-        organizer: "LPU Programming Club",
-
-        image:
-            "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
-
-    },
-
-
-    "placement-workshop": {
-
-        category: "WORKSHOPS",
-
-        title: "Career & Placement Preparation Workshop",
-
-        date: "Sep 15, 2026",
-
-        time: "3:00 PM - 5:00 PM",
-
-        location: "Seminar Hall",
-
-        joined: "120 / 200 Joined",
-
-        description:
-            "Prepare for upcoming placement opportunities with guidance on resumes, interviews and career preparation.",
-
-        organizer: "LPU Placement Cell",
-
-        image:
-            "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=1200&q=80"
+        }
 
     }
 
-};
+}
 
 
-// ===============================
-// LOAD EVENT DETAILS
-// ===============================
+// ============================================================
+// DISPLAY EVENT DETAILS
+// ============================================================
 
-const urlParams =
-    new URLSearchParams(window.location.search);
-
-const eventId =
-    urlParams.get("id");
-
-
-if (eventId && eventsData[eventId]) {
-
-    const event = eventsData[eventId];
-
+function displayEventDetails(event) {
 
     const category =
-        document.getElementById("eventCategory");
+        document.getElementById(
+            "eventCategory"
+        );
+
 
     const title =
-        document.getElementById("eventTitle");
+        document.getElementById(
+            "eventTitle"
+        );
+
 
     const date =
-        document.getElementById("eventDate");
+        document.getElementById(
+            "eventDate"
+        );
+
 
     const time =
-        document.getElementById("eventTime");
+        document.getElementById(
+            "eventTime"
+        );
+
 
     const location =
-        document.getElementById("eventLocation");
+        document.getElementById(
+            "eventLocation"
+        );
 
-    const participants =
-        document.getElementById("eventParticipants");
+
+    const joined =
+        document.getElementById(
+            "eventJoined"
+        );
+
 
     const description =
-        document.getElementById("eventDescription");
+        document.getElementById(
+            "eventDescription"
+        );
+
 
     const organizer =
-        document.getElementById("organizerName");
+        document.getElementById(
+            "eventOrganizer"
+        );
+
 
     const image =
-        document.getElementById("eventImage");
+        document.getElementById(
+            "eventImage"
+        );
 
 
     if (category) {
 
         category.textContent =
-            event.category;
+            event.category
+                ? event.category.toUpperCase()
+                : "GENERAL";
 
     }
 
@@ -395,7 +756,7 @@ if (eventId && eventsData[eventId]) {
     if (title) {
 
         title.textContent =
-            event.title;
+            event.title || "Untitled Event";
 
     }
 
@@ -403,15 +764,25 @@ if (eventId && eventsData[eventId]) {
     if (date) {
 
         date.textContent =
-            event.date;
+            formatDate(event.date);
 
     }
 
 
     if (time) {
 
+        const start =
+            formatTime(event.start_time);
+
+
+        const end =
+            formatTime(event.end_time);
+
+
         time.textContent =
-            event.time;
+            end
+                ? start + " - " + end
+                : start;
 
     }
 
@@ -419,15 +790,16 @@ if (eventId && eventsData[eventId]) {
     if (location) {
 
         location.textContent =
-            event.location;
+            event.location ||
+            "Location not specified";
 
     }
 
 
-    if (participants) {
+    if (joined) {
 
-        participants.textContent =
-            event.joined;
+        joined.textContent =
+            `${event.joined || 0} / ${event.capacity || 0} Joined`;
 
     }
 
@@ -435,7 +807,8 @@ if (eventId && eventsData[eventId]) {
     if (description) {
 
         description.textContent =
-            event.description;
+            event.description ||
+            "No description available.";
 
     }
 
@@ -443,161 +816,181 @@ if (eventId && eventsData[eventId]) {
     if (organizer) {
 
         organizer.textContent =
-            event.organizer;
+            event.organizer ||
+            "LPU Social";
 
     }
 
 
     if (image) {
 
-        image.style.backgroundImage =
-            `url('${event.image}')`;
+        if (
+            event.image &&
+            event.image.trim() !== ""
+        ) {
+
+            image.style.backgroundImage =
+                `url('${escapeAttribute(event.image)}')`;
+
+        } else {
+
+            image.style.backgroundImage =
+                "linear-gradient(135deg, #6c4ce8, #8f70ff)";
+
+        }
 
     }
 
 }
 
 
-// ===============================
-// JOIN / UNJOIN EVENT
-// ===============================
+// ============================================================
+// DATE FORMAT
+// ============================================================
 
-const joinEventBtn =
-    document.getElementById("joinEventBtn");
+function formatDate(dateValue) {
 
-
-if (joinEventBtn) {
-
-    joinEventBtn.addEventListener(
-        "click",
-        function () {
+    if (!dateValue) {
+        return "";
+    }
 
 
-            const participants =
-                document.getElementById(
-                    "eventParticipants"
-                );
+    try {
+
+        const date =
+            new Date(dateValue);
 
 
-            const joinedText =
-                document.getElementById(
-                    "joinedText"
-                );
+        if (isNaN(date.getTime())) {
 
-
-            const remainingText =
-                document.getElementById(
-                    "remainingText"
-                );
-
-
-            // Get current numbers
-            const numbers =
-                participants.textContent.match(/\d+/g);
-
-
-            let joined =
-                parseInt(numbers[0]);
-
-
-            const capacity =
-                parseInt(numbers[1]);
-
-
-            // ===============================
-            // USER IS JOINING
-            // ===============================
-
-            if (
-                joinEventBtn.textContent
-                    .includes("Join")
-            ) {
-
-
-                // Check if event is full
-                if (joined >= capacity) {
-
-                    alert(
-                        "This event is already full!"
-                    );
-
-                    return;
-
-                }
-
-
-                joined++;
-
-
-                // Update count
-                participants.textContent =
-                    joined +
-                    " / " +
-                    capacity +
-                    " Joined";
-
-
-                joinedText.textContent =
-                    joined +
-                    " students have joined";
-
-
-                remainingText.textContent =
-                    (capacity - joined) +
-                    " spots remaining";
-
-
-                // Change button
-                joinEventBtn.textContent =
-                    "Unjoin Event";
-
-
-                joinEventBtn.classList.add(
-                    "joined"
-                );
-
-            }
-
-
-            // ===============================
-            // USER IS UNJOINING
-            // ===============================
-
-            else {
-
-                joined--;
-
-
-                // Update count
-                participants.textContent =
-                    joined +
-                    " / " +
-                    capacity +
-                    " Joined";
-
-
-                joinedText.textContent =
-                    joined +
-                    " students have joined";
-
-
-                remainingText.textContent =
-                    (capacity - joined) +
-                    " spots remaining";
-
-
-                // Change button back
-                joinEventBtn.textContent =
-                    "Join Event";
-
-
-                joinEventBtn.classList.remove(
-                    "joined"
-                );
-
-            }
+            return dateValue;
 
         }
+
+
+        return date.toLocaleDateString(
+            "en-US",
+            {
+                month: "short",
+                day: "2-digit",
+                year: "numeric"
+            }
+        );
+
+    } catch (error) {
+
+        return dateValue;
+
+    }
+
+}
+
+
+// ============================================================
+// TIME FORMAT
+// ============================================================
+
+function formatTime(timeValue) {
+
+    if (!timeValue) {
+        return "";
+    }
+
+
+    // PostgreSQL / Spring may return:
+    // 01:07:00
+    // 01:07
+    // 13:07:00
+
+
+    const parts =
+        timeValue
+            .toString()
+            .split(":");
+
+
+    if (parts.length < 2) {
+
+        return timeValue;
+
+    }
+
+
+    let hours =
+        parseInt(parts[0], 10);
+
+
+    const minutes =
+        parts[1];
+
+
+    if (isNaN(hours)) {
+
+        return timeValue;
+
+    }
+
+
+    const period =
+        hours >= 12
+            ? "PM"
+            : "AM";
+
+
+    hours =
+        hours % 12;
+
+
+    if (hours === 0) {
+        hours = 12;
+    }
+
+
+    return (
+        String(hours).padStart(2, "0") +
+        ":" +
+        minutes +
+        " " +
+        period
     );
+
+}
+
+
+// ============================================================
+// HTML ESCAPING
+// ============================================================
+
+function escapeHTML(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+// ============================================================
+// ATTRIBUTE ESCAPING
+// ============================================================
+
+function escapeAttribute(value) {
+
+    if (!value) {
+        return "";
+    }
+
+
+    return String(value)
+        .replace(/'/g, "%27")
+        .replace(/"/g, "%22");
 
 }
