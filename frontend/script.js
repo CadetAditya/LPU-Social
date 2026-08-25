@@ -13,12 +13,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     setupMobileMenu();
 
-    // If this is Events page
+    // Load events wherever an events grid exists
     if (document.querySelector(".events-grid")) {
         loadEvents();
     }
 
-    // If this is Event Details page
+    // Event details page
     if (document.getElementById("eventTitle")) {
         loadEventDetails();
     }
@@ -98,7 +98,10 @@ async function loadEvents() {
             await response.json();
 
 
-        console.log("Events received from backend:", events);
+        console.log(
+            "Events received from backend:",
+            events
+        );
 
 
         renderEvents(events);
@@ -119,7 +122,9 @@ async function loadEvents() {
                 padding: 60px 20px;
             ">
 
-                <h2>Unable to load events</h2>
+                <h2>
+                    Unable to load events
+                </h2>
 
                 <p>
                     Please make sure the Spring Boot backend
@@ -172,7 +177,9 @@ function renderEvents(events) {
                 padding: 60px 20px;
             ">
 
-                <h2>No Events Available</h2>
+                <h2>
+                    No Events Available
+                </h2>
 
                 <p>
                     There are currently no events.
@@ -191,7 +198,6 @@ function renderEvents(events) {
 
         const card =
             createEventCard(event);
-
 
         eventsGrid.appendChild(card);
 
@@ -218,11 +224,17 @@ function createEventCard(event) {
         "event-card";
 
 
-    // Event image
+    // ========================================================
+    // EVENT IMAGE
+    // ========================================================
+
     let imageHTML = "";
 
 
-    if (event.image && event.image.trim() !== "") {
+    if (
+        event.image &&
+        event.image.trim() !== ""
+    ) {
 
         imageHTML = `
             <div
@@ -261,41 +273,55 @@ function createEventCard(event) {
     }
 
 
-    // Category
+    // ========================================================
+    // CATEGORY
+    // ========================================================
+
     const category =
         event.category
             ? event.category.toUpperCase()
             : "GENERAL";
 
 
-    // Date
+    // ========================================================
+    // DATE
+    // ========================================================
+
     const formattedDate =
         formatDate(event.date);
 
 
-    // Start time
+    // ========================================================
+    // TIME
+    // ========================================================
+
     const startTime =
-        formatTime(event.start_time);
+        formatTime(event.startTime);
 
 
-    // End time
     const endTime =
-        formatTime(event.end_time);
+        formatTime(event.endTime);
 
 
-    // Joined participants
+    // ========================================================
+    // PARTICIPANTS
+    // ========================================================
+
     const joined =
         event.joined != null
             ? event.joined
             : 0;
 
 
-    // Capacity
     const capacity =
         event.capacity != null
             ? event.capacity
             : 0;
 
+
+    // ========================================================
+    // CARD HTML
+    // ========================================================
 
     card.innerHTML = `
 
@@ -309,7 +335,9 @@ function createEventCard(event) {
 
 
             <h3 class="card-title">
-                ${escapeHTML(event.title || "Untitled Event")}
+                ${escapeHTML(
+                    event.title || "Untitled Event"
+                )}
             </h3>
 
 
@@ -322,12 +350,21 @@ function createEventCard(event) {
 
                 <div class="meta-item">
                     ⏰ ${escapeHTML(startTime)}
-                    ${endTime ? " - " + escapeHTML(endTime) : ""}
+                    ${
+                        endTime
+                            ? " - " + escapeHTML(endTime)
+                            : ""
+                    }
                 </div>
 
 
                 <div class="meta-item">
-                    📍 ${escapeHTML(event.location || "Location not specified")}
+                    📍 ${
+                        escapeHTML(
+                            event.location ||
+                            "Location not specified"
+                        )
+                    }
                 </div>
 
 
@@ -375,7 +412,8 @@ function updateEventCount(count) {
 
 
     eventCount.textContent =
-        count + (count === 1 ? " Event" : " Events");
+        count +
+        (count === 1 ? " Event" : " Events");
 
 }
 
@@ -386,24 +424,57 @@ function updateEventCount(count) {
 
 function setupSearchAndFilters() {
 
-    const searchInput =
+    // ========================================================
+    // EVENTS PAGE SEARCH
+    // ========================================================
+
+    const eventsSearchInput =
         document.getElementById("eventSearch");
 
 
-    const searchBtn =
+    const eventsSearchBtn =
         document.getElementById("eventSearchBtn");
 
 
-    const categoryPills =
+    // ========================================================
+    // HOME PAGE SEARCH
+    // ========================================================
+
+    const homeSearchInput =
+        document.getElementById("searchInput");
+
+
+    const homeSearchBtn =
+        document.getElementById("searchBtn");
+
+
+    // ========================================================
+    // EVENTS PAGE CATEGORY BUTTONS
+    // ========================================================
+
+    const eventsCategoryPills =
         document.querySelectorAll(
             ".event-filters .category-pill"
         );
 
 
-    // Search button
-    if (searchBtn) {
+    // ========================================================
+    // HOME PAGE CATEGORY BUTTONS
+    // ========================================================
 
-        searchBtn.addEventListener(
+    const homeCategoryPills =
+        document.querySelectorAll(
+            "#categoryList .category-pill"
+        );
+
+
+    // ========================================================
+    // EVENTS PAGE SEARCH BUTTON
+    // ========================================================
+
+    if (eventsSearchBtn) {
+
+        eventsSearchBtn.addEventListener(
             "click",
             filterEvents
         );
@@ -411,10 +482,27 @@ function setupSearchAndFilters() {
     }
 
 
-    // Search using Enter
-    if (searchInput) {
+    // ========================================================
+    // HOME PAGE SEARCH BUTTON
+    // ========================================================
 
-        searchInput.addEventListener(
+    if (homeSearchBtn) {
+
+        homeSearchBtn.addEventListener(
+            "click",
+            filterEvents
+        );
+
+    }
+
+
+    // ========================================================
+    // EVENTS PAGE ENTER KEY
+    // ========================================================
+
+    if (eventsSearchInput) {
+
+        eventsSearchInput.addEventListener(
             "keydown",
             function (event) {
 
@@ -430,15 +518,76 @@ function setupSearchAndFilters() {
     }
 
 
-    // Category buttons
-    categoryPills.forEach(
+    // ========================================================
+    // HOME PAGE ENTER KEY
+    // ========================================================
+
+    if (homeSearchInput) {
+
+        homeSearchInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Enter") {
+
+                    filterEvents();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    // ========================================================
+    // EVENTS PAGE CATEGORY
+    // ========================================================
+
+    eventsCategoryPills.forEach(
         function (category) {
 
             category.addEventListener(
                 "click",
                 function () {
 
-                    categoryPills.forEach(
+                    eventsCategoryPills.forEach(
+                        function (pill) {
+
+                            pill.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    category.classList.add(
+                        "active"
+                    );
+
+
+                    filterEvents();
+
+                }
+            );
+
+        }
+    );
+
+
+    // ========================================================
+    // HOME PAGE CATEGORY
+    // ========================================================
+
+    homeCategoryPills.forEach(
+        function (category) {
+
+            category.addEventListener(
+                "click",
+                function () {
+
+                    homeCategoryPills.forEach(
                         function (pill) {
 
                             pill.classList.remove(
@@ -471,22 +620,70 @@ function setupSearchAndFilters() {
 
 function filterEvents() {
 
-    const searchInput =
+    // ========================================================
+    // GET SEARCH INPUT
+    // ========================================================
+
+    let searchText = "";
+
+
+    const eventsSearchInput =
         document.getElementById("eventSearch");
 
 
-    const searchText =
-        searchInput
-            ? searchInput.value
+    const homeSearchInput =
+        document.getElementById("searchInput");
+
+
+    if (eventsSearchInput) {
+
+        searchText =
+            eventsSearchInput.value
                 .toLowerCase()
-                .trim()
-            : "";
+                .trim();
+
+    }
+    else if (homeSearchInput) {
+
+        searchText =
+            homeSearchInput.value
+                .toLowerCase()
+                .trim();
+
+    }
 
 
-    const activeCategory =
+    // ========================================================
+    // GET ACTIVE CATEGORY
+    // ========================================================
+
+    let activeCategory = null;
+
+
+    const eventsActiveCategory =
         document.querySelector(
             ".event-filters .category-pill.active"
         );
+
+
+    const homeActiveCategory =
+        document.querySelector(
+            "#categoryList .category-pill.active"
+        );
+
+
+    if (eventsActiveCategory) {
+
+        activeCategory =
+            eventsActiveCategory;
+
+    }
+    else if (homeActiveCategory) {
+
+        activeCategory =
+            homeActiveCategory;
+
+    }
 
 
     let selectedCategory = "all";
@@ -505,6 +702,10 @@ function filterEvents() {
     }
 
 
+    // ========================================================
+    // GET EVENT CARDS
+    // ========================================================
+
     const eventCards =
         document.querySelectorAll(
             ".events-grid .event-card"
@@ -513,6 +714,10 @@ function filterEvents() {
 
     let visibleCount = 0;
 
+
+    // ========================================================
+    // FILTER EACH CARD
+    // ========================================================
 
     eventCards.forEach(
         function (card) {
@@ -536,15 +741,27 @@ function filterEvents() {
                     : "";
 
 
+            // =================================================
+            // CATEGORY MATCH
+            // =================================================
+
             const categoryMatches =
                 selectedCategory === "all" ||
                 selectedCategory === "" ||
                 cardCategory === selectedCategory;
 
 
+            // =================================================
+            // SEARCH MATCH
+            // =================================================
+
             const searchMatches =
                 eventText.includes(searchText);
 
+
+            // =================================================
+            // SHOW / HIDE
+            // =================================================
 
             if (
                 categoryMatches &&
@@ -555,7 +772,8 @@ function filterEvents() {
 
                 visibleCount++;
 
-            } else {
+            }
+            else {
 
                 card.style.display = "none";
 
@@ -565,7 +783,13 @@ function filterEvents() {
     );
 
 
-    updateVisibleEventCount(visibleCount);
+    // ========================================================
+    // UPDATE COUNT
+    // ========================================================
+
+    updateVisibleEventCount(
+        visibleCount
+    );
 
 }
 
@@ -620,7 +844,6 @@ async function loadEventDetails() {
         urlParams.get("id");
 
 
-    // If there is no ID, do nothing
     if (!eventId) {
         return;
     }
@@ -657,7 +880,8 @@ async function loadEventDetails() {
         displayEventDetails(event);
 
 
-    } catch (error) {
+    }
+    catch (error) {
 
         console.error(
             "Error loading event details:",
@@ -756,7 +980,8 @@ function displayEventDetails(event) {
     if (title) {
 
         title.textContent =
-            event.title || "Untitled Event";
+            event.title ||
+            "Untitled Event";
 
     }
 
@@ -772,11 +997,11 @@ function displayEventDetails(event) {
     if (time) {
 
         const start =
-            formatTime(event.start_time);
+            formatTime(event.startTime);
 
 
         const end =
-            formatTime(event.end_time);
+            formatTime(event.endTime);
 
 
         time.textContent =
@@ -799,7 +1024,9 @@ function displayEventDetails(event) {
     if (joined) {
 
         joined.textContent =
-            `${event.joined || 0} / ${event.capacity || 0} Joined`;
+            `${event.joined || 0} / ${
+                event.capacity || 0
+            } Joined`;
 
     }
 
@@ -815,9 +1042,24 @@ function displayEventDetails(event) {
 
     if (organizer) {
 
-        organizer.textContent =
-            event.organizer ||
-            "LPU Social";
+        if (
+            event.organizer &&
+            typeof event.organizer === "object"
+        ) {
+
+            organizer.textContent =
+                event.organizer.name ||
+                event.organizer.registrationNumber ||
+                "LPU Social";
+
+        }
+        else {
+
+            organizer.textContent =
+                event.organizer ||
+                "LPU Social";
+
+        }
 
     }
 
@@ -830,9 +1072,12 @@ function displayEventDetails(event) {
         ) {
 
             image.style.backgroundImage =
-                `url('${escapeAttribute(event.image)}')`;
+                `url('${escapeAttribute(
+                    event.image
+                )}')`;
 
-        } else {
+        }
+        else {
 
             image.style.backgroundImage =
                 "linear-gradient(135deg, #6c4ce8, #8f70ff)";
@@ -877,7 +1122,8 @@ function formatDate(dateValue) {
             }
         );
 
-    } catch (error) {
+    }
+    catch (error) {
 
         return dateValue;
 
@@ -895,12 +1141,6 @@ function formatTime(timeValue) {
     if (!timeValue) {
         return "";
     }
-
-
-    // PostgreSQL / Spring may return:
-    // 01:07:00
-    // 01:07
-    // 13:07:00
 
 
     const parts =
@@ -963,8 +1203,13 @@ function formatTime(timeValue) {
 
 function escapeHTML(value) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
         return "";
+
     }
 
 

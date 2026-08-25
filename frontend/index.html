@@ -1,171 +1,481 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>LPU Social | Discover Campus Life</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
     <link rel="stylesheet" href="style.css">
+
 </head>
+
+
 <body>
 
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
     <nav class="navbar">
+
         <div class="container nav-container">
-            <a href="#" class="logo">LPU SOCIAL</a>
-            
+
+            <a href="index.html" class="logo">
+                LPU SOCIAL
+            </a>
+
+
             <ul class="nav-links" id="navLinks">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="events.html">Events</a></li>
-                <li><a href="create-event.html">Create Event</a></li>
-                <li><a href="my-events.html">My Events</a></li>
+
+                <li>
+                    <a href="index.html" class="active">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="events.html">
+                        Events
+                    </a>
+                </li>
+
+                <li>
+                    <a href="create-event.html">
+                        Create Event
+                    </a>
+                </li>
+
+                <li>
+                    <a href="my-events.html">
+                        My Events
+                    </a>
+                </li>
+
             </ul>
 
+
+            <!-- Authentication area -->
             <div class="nav-auth" id="navAuth">
-                <a href="login.html" class="login-link">Login</a>
-                <a href="registration.html" class="btn btn-primary">Sign Up</a>
+
+                <a
+                    href="login.html"
+                    class="login-link"
+                >
+                    Login
+                </a>
+
+                <a
+                    href="registration.html"
+                    class="btn btn-primary"
+                >
+                    Sign Up
+                </a>
+
             </div>
 
-            <button class="menu-toggle" id="mobileMenuBtn">☰</button>
+
+            <!-- Mobile menu -->
+            <button
+                class="menu-toggle"
+                id="mobileMenuBtn"
+            >
+                ☰
+            </button>
+
         </div>
+
     </nav>
 
+
+
+    <!-- =====================================================
+         HERO SECTION
+    ====================================================== -->
+
     <header class="hero">
-        <h4>Discover Campus Life</h4>
-        <h1>Discover. Create. Participate.</h1>
-        <p>Find events happening across your campus, connect with students and participate in experiences that interest you.</p>
-        
+
+        <h4>
+            Discover Campus Life
+        </h4>
+
+
+        <h1>
+            Discover. Create. Participate.
+        </h1>
+
+
+        <p>
+            Find events happening across your campus,
+            connect with students and participate in
+            experiences that interest you.
+        </p>
+
+
         <div class="hero-btns">
-            <a href="events.html" class="btn btn-primary">Explore Events</a>
-            <a href="create-event.html" class="btn btn-outline">Create Event</a>
+
+            <a
+                href="events.html"
+                class="btn btn-primary"
+            >
+                Explore Events
+            </a>
+
+
+            <a
+                href="create-event.html"
+                class="btn btn-outline"
+            >
+                Create Event
+            </a>
+
         </div>
+
+
+
+        <!-- =================================================
+             HOME PAGE SEARCH
+        ================================================== -->
 
         <div class="search-container">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="searchInput" class="search-input" placeholder="Search events, workshops, competitions...">
-            <button class="search-btn" id="searchBtn">Search</button>
+
+            <span class="search-icon">
+                🔍
+            </span>
+
+
+            <input
+                type="text"
+                id="searchInput"
+                class="search-input"
+                placeholder="Search events, workshops, competitions..."
+            >
+
+
+            <button
+                class="search-btn"
+                id="searchBtn"
+            >
+                Search
+            </button>
+
         </div>
+
     </header>
 
+
+
+    <!-- =====================================================
+         CATEGORY SECTION
+    ====================================================== -->
+
     <section class="categories-section">
+
         <div class="container">
-            <h3>Explore by Category</h3>
-            <div class="category-list" id="categoryList">
-                <button class="category-pill active">💻 Technology</button>
-                <button class="category-pill">⚽ Sports</button>
-                <button class="category-pill">🎭 Cultural</button>
-                <button class="category-pill">📚 Academic</button>
-                <button class="category-pill">🎤 Workshops</button>
-                <button class="category-pill">🎨 Others</button>
+
+            <h3>
+                Explore by Category
+            </h3>
+
+
+            <div
+                class="category-list"
+                id="categoryList"
+            >
+
+
+                <!-- ALL -->
+
+                <button
+                    class="category-pill active"
+                    data-category="all"
+                >
+                    All
+                </button>
+
+
+                <!-- TECHNOLOGY -->
+
+                <button
+                    class="category-pill"
+                    data-category="technology"
+                >
+                    💻 Technology
+                </button>
+
+
+                <!-- SPORTS -->
+
+                <button
+                    class="category-pill"
+                    data-category="sports"
+                >
+                    ⚽ Sports
+                </button>
+
+
+                <!-- CULTURAL -->
+
+                <button
+                    class="category-pill"
+                    data-category="cultural"
+                >
+                    🎭 Cultural
+                </button>
+
+
+                <!-- ACADEMIC -->
+
+                <button
+                    class="category-pill"
+                    data-category="academic"
+                >
+                    📚 Academic
+                </button>
+
+
+                <!-- WORKSHOPS -->
+
+                <button
+                    class="category-pill"
+                    data-category="workshops"
+                >
+                    🎤 Workshops
+                </button>
+
+
+                <!-- OTHERS -->
+
+                <button
+                    class="category-pill"
+                    data-category="others"
+                >
+                    🎨 Others
+                </button>
+
             </div>
+
         </div>
+
     </section>
 
-    <section id="events" class="events-section container">
+
+
+    <!-- =====================================================
+         UPCOMING EVENTS
+    ====================================================== -->
+
+    <section
+        id="events"
+        class="events-section container"
+    >
+
+
         <div class="section-header">
-            <h2>Upcoming Events</h2>
-            <a href="events.html" class="view-all">View All →</a>
+
+            <h2>
+                Upcoming Events
+            </h2>
+
+
+            <a
+                href="events.html"
+                class="view-all"
+            >
+                View All →
+            </a>
+
         </div>
+
+
+
+        <!--
+
+            IMPORTANT:
+
+            Event cards are NOT hardcoded here.
+
+            script.js will fetch events from:
+
+            http://localhost:8080/api/events
+
+            and automatically generate the cards.
+
+        -->
 
         <div class="events-grid">
-            
-            <div class="event-card">
-                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');">
-                    <span class="faculty-tag">⭐ FACULTY EVENT</span>
-                </div>
-                <div class="card-body">
-                    <span class="card-category">Technology</span>
-                    <h3 class="card-title">AI & Machine Learning Fundamentals</h3>
-                    <div class="card-meta">
-                        <div class="meta-item">📅 Aug 28, 2026</div>
-                        <div class="meta-item">⏰ 10:00 AM - 1:00 PM</div>
-                        <div class="meta-item">📍 Block 34, Room 402</div>
-                        <div class="meta-item">👥 72 / 100 Joined</div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-outline">View Details</button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="event-card">
-                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1543351611-58f69d7c1781?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
-                <div class="card-body">
-                    <span class="card-category">Sports</span>
-                    <h3 class="card-title">Inter-Hostel Football Tournament</h3>
-                    <div class="card-meta">
-                        <div class="meta-item">📅 Sep 02, 2026</div>
-                        <div class="meta-item">⏰ 4:00 PM - 7:00 PM</div>
-                        <div class="meta-item">📍 Main Ground</div>
-                        <div class="meta-item">👥 45 / 80 Joined</div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-outline">View Details</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="event-card">
-                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1511556532299-8f662fc26c06?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
-                <div class="card-body">
-                    <span class="card-category">Cultural</span>
-                    <h3 class="card-title">Open Mic Night: Poetry & Music</h3>
-                    <div class="card-meta">
-                        <div class="meta-item">📅 Sep 05, 2026</div>
-                        <div class="meta-item">⏰ 6:00 PM - 9:00 PM</div>
-                        <div class="meta-item">📍 Student Center</div>
-                        <div class="meta-item">👥 35 / 50 Joined</div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-outline">View Details</button>
-                    </div>
-                </div>
-            </div>
+            <!-- Events loaded from Spring Boot -->
 
         </div>
+
     </section>
+
+
+
+    <!-- =====================================================
+         FEATURES SECTION
+    ====================================================== -->
 
     <section class="features-section">
+
         <div class="container">
-            <h2>Why LPU Social?</h2>
+
+            <h2>
+                Why LPU Social?
+            </h2>
+
+
             <div class="features-grid">
+
+
+                <!-- FEATURE 1 -->
+
                 <div class="feature">
-                    <div class="feature-icon">🔍</div>
-                    <h4>Discover Events</h4>
-                    <p>Never miss out on what's happening. Find workshops, sports, and cultural fests easily.</p>
+
+                    <div class="feature-icon">
+                        🔍
+                    </div>
+
+
+                    <h4>
+                        Discover Events
+                    </h4>
+
+
+                    <p>
+                        Never miss out on what's happening.
+                        Find workshops, sports, and cultural
+                        fests easily.
+                    </p>
+
                 </div>
+
+
+
+                <!-- FEATURE 2 -->
+
                 <div class="feature">
-                    <div class="feature-icon">➕</div>
-                    <h4>Create Easily</h4>
-                    <p>Host your own events, manage participants, and grow your campus community.</p>
+
+                    <div class="feature-icon">
+                        ➕
+                    </div>
+
+
+                    <h4>
+                        Create Easily
+                    </h4>
+
+
+                    <p>
+                        Host your own events, manage
+                        participants, and grow your campus
+                        community.
+                    </p>
+
                 </div>
+
+
+
+                <!-- FEATURE 3 -->
+
                 <div class="feature">
-                    <div class="feature-icon">🤝</div>
-                    <h4>Connect Students</h4>
-                    <p>Meet like-minded peers who share your interests in technology, arts, and more.</p>
+
+                    <div class="feature-icon">
+                        🤝
+                    </div>
+
+
+                    <h4>
+                        Connect Students
+                    </h4>
+
+
+                    <p>
+                        Meet like-minded peers who share
+                        your interests in technology, arts,
+                        and more.
+                    </p>
+
                 </div>
+
             </div>
+
         </div>
+
     </section>
 
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
     <footer class="footer">
+
         <div class="container">
-            <div class="footer-logo">LPU SOCIAL</div>
-            <p class="footer-tagline">Discover • Create • Participate</p>
-            
+
+
+            <div class="footer-logo">
+                LPU SOCIAL
+            </div>
+
+
+            <p class="footer-tagline">
+                Discover • Create • Participate
+            </p>
+
+
             <div class="footer-links">
-                <a href="events.html">Events</a>
-                <a href="#">About</a>
-                <a href="#">Contact</a>
+
+                <a href="events.html">
+                    Events
+                </a>
+
+
+                <a href="#">
+                    About
+                </a>
+
+
+                <a href="#">
+                    Contact
+                </a>
+
             </div>
-            
+
+
             <div class="copyright">
-                © 2026 LPU Social. All rights reserved.
+
+                © 2026 LPU Social.
+                All rights reserved.
+
             </div>
+
         </div>
+
     </footer>
 
-    <!-- This links your JavaScript file -->
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
     <script src="auth.js"></script>
+
     <script src="script.js"></script>
+
+
 </body>
+
 </html>
