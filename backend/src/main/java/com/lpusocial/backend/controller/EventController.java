@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lpusocial.backend.model.Event;
+import com.lpusocial.backend.model.EventParticipant;
 import com.lpusocial.backend.service.EventService;
 
 @RestController
@@ -27,17 +28,26 @@ public class EventController {
         this.eventService = eventService;
     }
 
+
+    // ==========================================
     // CREATE EVENT
+    // ==========================================
+
     @PostMapping
     public ResponseEntity<Event> createEvent(
             @RequestBody Event event) {
 
-        Event savedEvent = eventService.createEvent(event);
+        Event savedEvent =
+                eventService.createEvent(event);
 
         return ResponseEntity.ok(savedEvent);
     }
 
+
+    // ==========================================
     // GET ALL EVENTS
+    // ==========================================
+
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents() {
 
@@ -46,7 +56,11 @@ public class EventController {
         );
     }
 
+
+    // ==========================================
     // GET EVENT BY ID
+    // ==========================================
+
     @GetMapping("/{id}")
     public ResponseEntity<Event> getEventById(
             @PathVariable Long id) {
@@ -57,11 +71,17 @@ public class EventController {
         return event
                 .map(ResponseEntity::ok)
                 .orElseGet(
-                    () -> ResponseEntity.notFound().build()
+                        () -> ResponseEntity
+                                .notFound()
+                                .build()
                 );
     }
 
+
+    // ==========================================
     // DELETE EVENT
+    // ==========================================
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEvent(
             @PathVariable Long id) {
@@ -70,11 +90,82 @@ public class EventController {
                 eventService.getEventById(id);
 
         if (event.isEmpty()) {
-            return ResponseEntity.notFound().build();
+
+            return ResponseEntity
+                    .notFound()
+                    .build();
         }
 
         eventService.deleteEvent(id);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .noContent()
+                .build();
+    }
+
+
+    // ==========================================
+    // JOIN EVENT
+    // ==========================================
+
+    @PostMapping("/{eventId}/join/{userId}")
+    public ResponseEntity<?> joinEvent(
+            @PathVariable Long eventId,
+            @PathVariable Long userId) {
+
+        try {
+
+            EventParticipant participant =
+                    eventService.joinEvent(
+                            eventId,
+                            userId
+                    );
+
+            return ResponseEntity.ok(participant);
+
+        } catch (RuntimeException e) {
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(
+                            java.util.Map.of(
+                                    "message",
+                                    e.getMessage()
+                            )
+                    );
+        }
+    }
+
+
+    // ==========================================
+    // GET USER'S JOINED EVENTS
+    // ==========================================
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Event>> getUserEvents(
+            @PathVariable Long userId) {
+
+        return ResponseEntity.ok(
+                eventService.getEventsJoinedByUser(userId)
+        );
+    }
+
+
+    // ==========================================
+    // CHECK WHETHER USER JOINED EVENT
+    // ==========================================
+
+    @GetMapping("/{eventId}/joined/{userId}")
+    public ResponseEntity<Boolean> hasUserJoinedEvent(
+            @PathVariable Long eventId,
+            @PathVariable Long userId) {
+
+        boolean joined =
+                eventService.hasUserJoinedEvent(
+                        eventId,
+                        userId
+                );
+
+        return ResponseEntity.ok(joined);
     }
 }

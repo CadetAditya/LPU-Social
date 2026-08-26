@@ -1,102 +1,286 @@
 // ========================================
-// CREATE EVENT
+// LPU SOCIAL - CREATE EVENT
 // ========================================
 
-const createEventForm = document.getElementById("createEventForm");
-const message = document.getElementById("message");
+
+// ========================================
+// GET FORM ELEMENTS
+// ========================================
+
+const createEventForm =
+    document.getElementById("createEventForm");
+
+const message =
+    document.getElementById("message");
 
 
 // ========================================
 // CHECK LOGIN
 // ========================================
 
+// loggedInUser comes from auth.js
+// auth.js is loaded before create-event.js
+
 if (!loggedInUser) {
 
-    message.textContent = "Please login first.";
-    message.style.color = "red";
+    message.textContent =
+        "Please login first.";
 
-    createEventForm.style.display = "none";
+    message.style.color =
+        "red";
+
+    createEventForm.style.display =
+        "none";
 }
 
 
 // ========================================
-// IMAGE PREVIEW
+// IMAGE ELEMENTS
 // ========================================
 
-const eventImage = document.getElementById("eventImage");
-const imagePreview = document.getElementById("imagePreview");
+const eventImage =
+    document.getElementById("eventImage");
+
+const imagePreview =
+    document.getElementById("imagePreview");
+
 const imagePreviewContainer =
-    document.getElementById("imagePreviewContainer");
+    document.getElementById(
+        "imagePreviewContainer"
+    );
+
+
+// ========================================
+// IMAGE DATA
+// ========================================
+
+// This will contain the complete Base64 image
+// Example:
+// data:image/jpeg;base64,/9j/4AAQSkZJRg...
 
 let imageData = null;
 
 
+// ========================================
+// IMAGE PREVIEW + BASE64 CONVERSION
+// ========================================
+
 if (eventImage) {
 
-    eventImage.addEventListener("change", function () {
+    eventImage.addEventListener(
+        "change",
+        function () {
 
-        const file = eventImage.files[0];
+            const file =
+                eventImage.files[0];
 
-        if (!file) {
 
-            imageData = null;
+            // ========================================
+            // NO FILE
+            // ========================================
 
-            imagePreviewContainer.style.display = "none";
+            if (!file) {
 
-            return;
+                imageData = null;
+
+                if (imagePreviewContainer) {
+
+                    imagePreviewContainer.style.display =
+                        "none";
+
+                }
+
+                return;
+            }
+
+
+            // ========================================
+            // CHECK IMAGE TYPE
+            // ========================================
+
+            if (!file.type.startsWith("image/")) {
+
+                message.textContent =
+                    "Please select a valid image.";
+
+                message.style.color =
+                    "red";
+
+                eventImage.value = "";
+
+                imageData = null;
+
+                if (imagePreviewContainer) {
+
+                    imagePreviewContainer.style.display =
+                        "none";
+
+                }
+
+                return;
+            }
+
+
+            // ========================================
+            // CHECK IMAGE SIZE
+            // ========================================
+
+            // Maximum 2 MB
+
+            if (file.size > 2 * 1024 * 1024) {
+
+                message.textContent =
+                    "Image size must be less than 2 MB.";
+
+                message.style.color =
+                    "red";
+
+                eventImage.value = "";
+
+                imageData = null;
+
+                if (imagePreviewContainer) {
+
+                    imagePreviewContainer.style.display =
+                        "none";
+
+                }
+
+                return;
+            }
+
+
+            // ========================================
+            // CONVERT IMAGE TO BASE64
+            // ========================================
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function (e) {
+
+                    // Store complete Base64 image
+                    imageData =
+                        e.target.result;
+
+
+                    // ========================================
+                    // DEBUG LOGS
+                    // ========================================
+
+                    console.log(
+                        "IMAGE DATA CREATED:"
+                    );
+
+                    console.log(
+                        imageData.substring(
+                            0,
+                            80
+                        )
+                    );
+
+                    console.log(
+                        "IMAGE DATA LENGTH:",
+                        imageData.length
+                    );
+
+
+                    // ========================================
+                    // VERIFY BASE64 FORMAT
+                    // ========================================
+
+                    if (
+                        !imageData.startsWith(
+                            "data:image/"
+                        )
+                    ) {
+
+                        console.error(
+                            "Invalid Base64 image format."
+                        );
+
+                        imageData = null;
+
+                        message.textContent =
+                            "Could not process the image.";
+
+                        message.style.color =
+                            "red";
+
+                        return;
+                    }
+
+
+                    // ========================================
+                    // SHOW IMAGE PREVIEW
+                    // ========================================
+
+                    if (imagePreview) {
+
+                        imagePreview.src =
+                            imageData;
+
+                    }
+
+
+                    if (imagePreviewContainer) {
+
+                        imagePreviewContainer.style.display =
+                            "block";
+
+                    }
+
+
+                    // Clear previous error message
+
+                    if (
+                        message.textContent ===
+                        "Please select a valid image." ||
+                        message.textContent ===
+                        "Image size must be less than 2 MB."
+                    ) {
+
+                        message.textContent =
+                            "";
+
+                    }
+
+                };
+
+
+            // ========================================
+            // FILE READER ERROR
+            // ========================================
+
+            reader.onerror =
+                function () {
+
+                    console.error(
+                        "Could not read image file."
+                    );
+
+                    imageData =
+                        null;
+
+                    message.textContent =
+                        "Could not read the selected image.";
+
+                    message.style.color =
+                        "red";
+
+                };
+
+
+            // ========================================
+            // START READING FILE
+            // ========================================
+
+            reader.readAsDataURL(file);
+
         }
-
-
-        // Check image type
-
-        if (!file.type.startsWith("image/")) {
-
-            message.textContent =
-                "Please select a valid image.";
-
-            message.style.color = "red";
-
-            eventImage.value = "";
-
-            return;
-        }
-
-
-        // Check image size
-        // Maximum 2 MB
-
-        if (file.size > 2 * 1024 * 1024) {
-
-            message.textContent =
-                "Image size must be less than 2 MB.";
-
-            message.style.color = "red";
-
-            eventImage.value = "";
-
-            return;
-        }
-
-
-        // Convert image to Base64
-
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-
-            imageData = e.target.result;
-
-            // Show preview
-
-            imagePreview.src = imageData;
-
-            imagePreviewContainer.style.display = "block";
-
-        };
-
-        reader.readAsDataURL(file);
-
-    });
+    );
 
 }
 
@@ -121,7 +305,49 @@ createEventForm.addEventListener(
             message.textContent =
                 "Please login before creating an event.";
 
-            message.style.color = "red";
+            message.style.color =
+                "red";
+
+            return;
+        }
+
+
+        // ========================================
+        // CHECK IMAGE
+        // ========================================
+
+        if (!imageData) {
+
+            message.textContent =
+                "Please select an event image.";
+
+            message.style.color =
+                "red";
+
+            return;
+        }
+
+
+        // ========================================
+        // VERIFY IMAGE DATA
+        // ========================================
+
+        if (
+            !imageData.startsWith(
+                "data:image/"
+            )
+        ) {
+
+            console.error(
+                "Invalid image data:",
+                imageData
+            );
+
+            message.textContent =
+                "Invalid image data. Please select the image again.";
+
+            message.style.color =
+                "red";
 
             return;
         }
@@ -132,49 +358,97 @@ createEventForm.addEventListener(
         // ========================================
 
         const title =
-            document.getElementById("title").value.trim();
+            document
+                .getElementById("title")
+                .value
+                .trim();
+
 
         const category =
-            document.getElementById("category").value;
+            document
+                .getElementById("category")
+                .value;
+
 
         const date =
-            document.getElementById("date").value;
+            document
+                .getElementById("date")
+                .value;
+
 
         const startTime =
-            document.getElementById("startTime").value;
+            document
+                .getElementById("startTime")
+                .value;
+
 
         const endTime =
-            document.getElementById("endTime").value;
+            document
+                .getElementById("endTime")
+                .value;
+
 
         const location =
-            document.getElementById("location").value.trim();
+            document
+                .getElementById("location")
+                .value
+                .trim();
+
 
         const capacity =
             parseInt(
-                document.getElementById("capacity").value
+                document
+                    .getElementById("capacity")
+                    .value
             );
 
+
         const description =
-            document.getElementById("description").value.trim();
+            document
+                .getElementById("description")
+                .value
+                .trim();
 
 
         // ========================================
         // VALIDATION
         // ========================================
 
-        if (!title ||
+        if (
+            !title ||
             !category ||
             !date ||
             !startTime ||
             !endTime ||
             !location ||
             !capacity ||
-            !description) {
+            !description
+        ) {
 
             message.textContent =
                 "Please fill all required fields.";
 
-            message.style.color = "red";
+            message.style.color =
+                "red";
+
+            return;
+        }
+
+
+        // ========================================
+        // CAPACITY VALIDATION
+        // ========================================
+
+        if (
+            isNaN(capacity) ||
+            capacity <= 0
+        ) {
+
+            message.textContent =
+                "Capacity must be greater than 0.";
+
+            message.style.color =
+                "red";
 
             return;
         }
@@ -189,7 +463,8 @@ createEventForm.addEventListener(
             message.textContent =
                 "End time must be after start time.";
 
-            message.style.color = "red";
+            message.style.color =
+                "red";
 
             return;
         }
@@ -200,17 +475,58 @@ createEventForm.addEventListener(
         // ========================================
 
         const today =
-            new Date().toISOString().split("T")[0];
+            new Date()
+                .toISOString()
+                .split("T")[0];
+
 
         if (date < today) {
 
             message.textContent =
                 "Event date cannot be in the past.";
 
-            message.style.color = "red";
+            message.style.color =
+                "red";
 
             return;
         }
+
+
+        // ========================================
+        // FINAL IMAGE DEBUG
+        // ========================================
+
+        console.log(
+            "================================"
+        );
+
+        console.log(
+            "FINAL IMAGE DATA:"
+        );
+
+        console.log(
+            imageData.substring(
+                0,
+                80
+            )
+        );
+
+        console.log(
+            "IMAGE LENGTH:",
+            imageData.length
+        );
+
+        console.log(
+            "IMAGE TYPE:",
+            imageData.substring(
+                0,
+                imageData.indexOf(";")
+            )
+        );
+
+        console.log(
+            "================================"
+        );
 
 
         // ========================================
@@ -219,31 +535,74 @@ createEventForm.addEventListener(
 
         const eventData = {
 
-            title: title,
+            title:
+                title,
 
-            category: category,
+            category:
+                category,
 
-            date: date,
+            date:
+                date,
 
-            startTime: startTime,
+            startTime:
+                startTime,
 
-            endTime: endTime,
+            endTime:
+                endTime,
 
-            location: location,
+            location:
+                location,
 
-            capacity: capacity,
+            capacity:
+                capacity,
 
-            joined: 0,
+            joined:
+                0,
 
-            description: description,
+            description:
+                description,
 
-            image: imageData,
+            // IMPORTANT
+            // Send complete Base64 image
+            image:
+                imageData,
 
             organizer: {
-                id: loggedInUser.id
+
+                id:
+                    loggedInUser.id
+
             }
 
         };
+
+
+        // ========================================
+        // DEBUG EVENT DATA
+        // ========================================
+
+        console.log(
+            "Event data being sent:"
+        );
+
+        console.log(
+            {
+                title: eventData.title,
+                category: eventData.category,
+                date: eventData.date,
+                startTime: eventData.startTime,
+                endTime: eventData.endTime,
+                location: eventData.location,
+                capacity: eventData.capacity,
+                description: eventData.description,
+                imageLength: eventData.image.length,
+                imageStart: eventData.image.substring(
+                    0,
+                    80
+                ),
+                organizerId: eventData.organizer.id
+            }
+        );
 
 
         // ========================================
@@ -255,21 +614,30 @@ createEventForm.addEventListener(
             message.textContent =
                 "Creating event...";
 
-            message.style.color = "#5a4fcf";
+            message.style.color =
+                "#5a4fcf";
 
 
-            const response = await fetch(
-                "http://localhost:8080/api/events",
-                {
-                    method: "POST",
+            const response =
+                await fetch(
+                    "http://localhost:8080/api/events",
+                    {
+                        method: "POST",
 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                        headers: {
 
-                    body: JSON.stringify(eventData)
-                }
-            );
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                eventData
+                            )
+
+                    }
+                );
 
 
             // ========================================
@@ -281,42 +649,97 @@ createEventForm.addEventListener(
                 const savedEvent =
                     await response.json();
 
+
                 console.log(
-                    "Event created:",
+                    "Event created successfully:"
+                );
+
+                console.log(
                     savedEvent
                 );
 
 
+                // ========================================
+                // VERIFY IMAGE RETURNED BY BACKEND
+                // ========================================
+
+                if (
+                    savedEvent.image
+                ) {
+
+                    console.log(
+                        "IMAGE RETURNED FROM BACKEND:"
+                    );
+
+                    console.log(
+                        savedEvent.image.substring(
+                            0,
+                            80
+                        )
+                    );
+
+                    console.log(
+                        "RETURNED IMAGE LENGTH:",
+                        savedEvent.image.length
+                    );
+
+                } else {
+
+                    console.warn(
+                        "WARNING: Backend returned no image."
+                    );
+
+                }
+
+
+                // ========================================
+                // SUCCESS MESSAGE
+                // ========================================
+
                 message.textContent =
                     "Event created successfully!";
 
-                message.style.color = "green";
+                message.style.color =
+                    "green";
 
 
-                // Reset form
+                // ========================================
+                // RESET FORM
+                // ========================================
 
                 createEventForm.reset();
 
-                imageData = null;
-
-                imagePreviewContainer.style.display =
-                    "none";
+                imageData =
+                    null;
 
 
-                // Redirect after 1 second
+                if (imagePreviewContainer) {
 
-                setTimeout(function () {
+                    imagePreviewContainer.style.display =
+                        "none";
 
-                    window.location.href =
-                        "events.html";
+                }
 
-                }, 1000);
+
+                // ========================================
+                // REDIRECT
+                // ========================================
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "events.html";
+
+                    },
+                    1000
+                );
 
             }
 
 
             // ========================================
-            // ERROR
+            // ERROR RESPONSE
             // ========================================
 
             else {
@@ -324,19 +747,31 @@ createEventForm.addEventListener(
                 let errorMessage =
                     "Unable to create event.";
 
+
                 try {
 
                     const errorData =
                         await response.json();
 
-                    if (errorData.message) {
+
+                    console.error(
+                        "Backend error:",
+                        errorData
+                    );
+
+
+                    if (
+                        errorData.message
+                    ) {
 
                         errorMessage =
                             errorData.message;
 
                     }
 
-                } catch (error) {
+                }
+
+                catch (error) {
 
                     console.log(
                         "Could not read error response."
@@ -348,7 +783,9 @@ createEventForm.addEventListener(
                 message.textContent =
                     errorMessage;
 
-                message.style.color = "red";
+                message.style.color =
+                    "red";
+
             }
 
         }
@@ -365,10 +802,13 @@ createEventForm.addEventListener(
                 error
             );
 
+
             message.textContent =
                 "Unable to connect to server.";
 
-            message.style.color = "red";
+            message.style.color =
+                "red";
+
         }
 
     }

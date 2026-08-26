@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -49,7 +48,7 @@ public class Event {
     private String description;
 
     // Image is stored as Base64 text
-    @Lob
+    
     @Column(columnDefinition = "TEXT")
     private String image;
 

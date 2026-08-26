@@ -9,13 +9,11 @@
 
     <title>LPU Social | Event Details</title>
 
-    <!-- Google Font -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet"
     >
 
-    <!-- Main CSS -->
     <link rel="stylesheet" href="style.css">
 
 </head>
@@ -32,6 +30,7 @@
                 LPU SOCIAL
             </a>
 
+
             <ul class="nav-links" id="navLinks">
 
                 <li>
@@ -47,13 +46,13 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="create-event.html">
                         Create Event
                     </a>
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="my-events.html">
                         My Events
                     </a>
                 </li>
@@ -61,13 +60,21 @@
             </ul>
 
 
+            <!-- ================= AUTH NAV ================= -->
+
             <div class="nav-auth" id="navAuth">
 
-                <a href="#" class="login-link">
+                <a
+                    href="login.html"
+                    class="login-link"
+                >
                     Login
                 </a>
 
-                <a href="#" class="btn btn-primary">
+                <a
+                    href="registration.html"
+                    class="btn btn-primary"
+                >
                     Sign Up
                 </a>
 
@@ -92,7 +99,8 @@
 
         <div class="container">
 
-            <!-- Back Button -->
+
+            <!-- ================= BACK BUTTON ================= -->
 
             <a
                 href="events.html"
@@ -102,7 +110,7 @@
             </a>
 
 
-            <!-- EVENT DETAILS CARD -->
+            <!-- ================= EVENT DETAILS CARD ================= -->
 
             <div class="event-details-card">
 
@@ -113,9 +121,6 @@
                     class="event-details-image"
                     id="eventImage"
                 >
-
-                    <!-- Faculty tag will be added by JavaScript -->
-
                 </div>
 
 
@@ -137,7 +142,7 @@
                     <!-- TITLE -->
 
                     <h1 id="eventTitle">
-                        AI & Machine Learning Fundamentals
+                        Loading event...
                     </h1>
 
 
@@ -161,7 +166,7 @@
                                 </strong>
 
                                 <p id="eventDate">
-                                    Aug 28, 2026
+                                    Loading...
                                 </p>
 
                             </div>
@@ -184,7 +189,7 @@
                                 </strong>
 
                                 <p id="eventTime">
-                                    10:00 AM - 1:00 PM
+                                    Loading...
                                 </p>
 
                             </div>
@@ -207,7 +212,7 @@
                                 </strong>
 
                                 <p id="eventLocation">
-                                    Block 34, Room 402
+                                    Loading...
                                 </p>
 
                             </div>
@@ -230,7 +235,7 @@
                                 </strong>
 
                                 <p id="eventParticipants">
-                                    72 / 100 Joined
+                                    Loading...
                                 </p>
 
                             </div>
@@ -249,10 +254,7 @@
                         </h2>
 
                         <p id="eventDescription">
-                            Learn the fundamentals of Artificial Intelligence
-                            and Machine Learning in this interactive campus
-                            workshop. The session will cover important concepts,
-                            practical examples and applications of AI and ML.
+                            Loading event description...
                         </p>
 
                     </section>
@@ -281,11 +283,11 @@
                             <div>
 
                                 <h3 id="organizerName">
-                                    Faculty Organizer
+                                    LPU Social
                                 </h3>
 
                                 <p id="organizerRole">
-                                    Faculty Member
+                                    Event Organizer
                                 </p>
 
                             </div>
@@ -300,20 +302,25 @@
                     <div class="event-join-section">
 
 
+                        <!-- JOIN INFORMATION -->
+
                         <div>
 
                             <strong id="joinedText">
-                                72 students have joined
+                                0 students have joined
                             </strong>
 
                             <p id="remainingText">
-                                28 spots remaining
+                                Loading spots...
                             </p>
 
                         </div>
 
 
+                        <!-- JOIN BUTTON -->
+
                         <button
+                            type="button"
                             class="btn btn-primary join-event-btn"
                             id="joinEventBtn"
                         >
@@ -321,6 +328,20 @@
                         </button>
 
                     </div>
+
+
+                    <!-- ================= JOIN MESSAGE ================= -->
+
+                    <p
+                        id="joinMessage"
+                        style="
+                            margin-top: 15px;
+                            text-align: center;
+                            font-weight: 500;
+                        "
+                    >
+                    </p>
+
 
                 </div>
 
@@ -358,12 +379,8 @@
                     Events
                 </a>
 
-                <a href="#">
-                    About
-                </a>
-
-                <a href="#">
-                    Contact
+                <a href="my-events.html">
+                    My Events
                 </a>
 
             </div>
@@ -380,7 +397,12 @@
 
     <!-- ================= JAVASCRIPT ================= -->
 
+    <!-- Authentication -->
+    <script src="auth.js"></script>
+
+    <!-- Main JavaScript -->
     <script src="script.js"></script>
+
 
 </body>
 
