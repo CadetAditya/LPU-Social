@@ -78,31 +78,64 @@ public class EventController {
     }
 
 
-    // ==========================================
-    // DELETE EVENT
-    // ==========================================
+   // ==========================================
+// DELETE EVENT
+// ==========================================
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEvent(
-            @PathVariable Long id) {
+@DeleteMapping("/{eventId}/organizer/{userId}")
+public ResponseEntity<?> deleteEvent(
+        @PathVariable Long eventId,
+        @PathVariable Long userId) {
 
-        Optional<Event> event =
-                eventService.getEventById(id);
+    try {
 
-        if (event.isEmpty()) {
-
-            return ResponseEntity
-                    .notFound()
-                    .build();
-        }
-
-        eventService.deleteEvent(id);
+        eventService.deleteEvent(
+                eventId,
+                userId
+        );
 
         return ResponseEntity
                 .noContent()
                 .build();
-    }
 
+    } catch (RuntimeException error) {
+
+        if (
+            error.getMessage() != null &&
+            error.getMessage()
+                    .equals("Event not found.")
+        ) {
+
+            return ResponseEntity
+                    .notFound()
+                    .build();
+
+        }
+
+
+        if (
+            error.getMessage() != null &&
+            error.getMessage()
+                    .equals("You are not allowed to delete this event.")
+        ) {
+
+            return ResponseEntity
+                    .status(403)
+                    .body(
+                        error.getMessage()
+                    );
+
+        }
+
+
+        return ResponseEntity
+                .badRequest()
+                .body(
+                    error.getMessage()
+                );
+
+    }
+}
 
     // ==========================================
     // JOIN EVENT
@@ -149,6 +182,19 @@ public class EventController {
                 eventService.getEventsJoinedByUser(userId)
         );
     }
+
+    // ==========================================
+// GET EVENTS CREATED BY USER
+// ==========================================
+
+@GetMapping("/organizer/{userId}")
+public ResponseEntity<List<Event>> getEventsCreatedByUser(
+        @PathVariable Long userId) {
+
+    return ResponseEntity.ok(
+            eventService.getEventsCreatedByUser(userId)
+    );
+}
 
 
     // ==========================================

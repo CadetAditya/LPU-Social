@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>LPU Social | My Created Events</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <nav class="navbar">
+
+        <div class="container nav-container">
+
+            <a
+                href="index.html"
+                class="logo"
+            >
+                LPU SOCIAL
+            </a>
+
+
+            <ul
+                class="nav-links"
+                id="navLinks"
+            >
+
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="events.html">
+                        Events
+                    </a>
+                </li>
+
+                <li>
+                    <a href="create-event.html">
+                        Create Event
+                    </a>
+                </li>
+
+                <li>
+                    <a href="my-events.html">
+                        My Events
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="organizer-events.html"
+                        class="active"
+                    >
+                        My Created Events
+                    </a>
+                </li>
+
+            </ul>
+
+
+            <div
+                class="nav-auth"
+                id="navAuth"
+            >
+
+                <a
+                    href="login.html"
+                    class="login-link"
+                >
+                    Login
+                </a>
+
+                <a
+                    href="registration.html"
+                    class="btn btn-primary"
+                >
+                    Sign Up
+                </a>
+
+            </div>
+
+
+            <button
+                class="menu-toggle"
+                id="mobileMenuBtn"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <section class="page-header">
+
+        <div class="container">
+
+            <h1>
+                My Created Events
+            </h1>
+
+            <p>
+                Manage the events you have organized.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         EVENTS
+    ====================================================== -->
+
+    <section class="events-section container">
+
+        <div class="section-header">
+
+            <h2>
+                Your Events
+            </h2>
+
+            <span
+                class="event-count"
+                id="organizerEventCount"
+            >
+                0 Events
+            </span>
+
+        </div>
+
+
+        <!-- Events will be loaded using JavaScript -->
+
+        <div
+            class="events-grid"
+            id="organizerEventsGrid"
+        >
+
+        </div>
+
+
+        <!-- Empty message -->
+
+        <div
+            id="noOrganizerEvents"
+            style="
+                display: none;
+                text-align: center;
+                padding: 60px 20px;
+            "
+        >
+
+            <h2>
+                You haven't created any events yet.
+            </h2>
+
+            <p>
+                Create your first campus event.
+            </p>
+
+            <br>
+
+            <a
+                href="create-event.html"
+                class="btn btn-primary"
+            >
+                Create Event
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="auth.js"></script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

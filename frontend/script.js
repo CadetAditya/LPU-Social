@@ -5,6 +5,7 @@
 const API_URL = "http://localhost:8080/api/events";
 
 
+
 // ============================================================
 // PAGE LOAD
 // ============================================================
@@ -14,53 +15,41 @@ document.addEventListener("DOMContentLoaded", function () {
     setupMobileMenu();
 
     /*
-     * IMPORTANT PAGE ORDER:
-     *
-     * 1. My Events
-     * 2. Event Details
-     * 3. Events page
-     * 4. Home page
+     * IMPORTANT:
+     * Different pages use different containers.
+     * We check the more specific pages first.
      */
 
-    // ========================================================
-    // MY EVENTS PAGE
-    // ========================================================
+    // Organizer Events page
+    if (document.getElementById("organizerEventsGrid")) {
 
-    if (document.getElementById("myEventsGrid")) {
+        loadOrganizerEvents();
+
+    }
+
+    // My Events page
+    else if (document.getElementById("myEventsGrid")) {
 
         loadMyEvents();
 
     }
 
-    // ========================================================
-    // EVENT DETAILS PAGE
-    // ========================================================
-
+    // Event Details page
     else if (document.getElementById("eventTitle")) {
 
         loadEventDetails();
 
     }
 
-    // ========================================================
-    // EVENTS PAGE
-    // ========================================================
-
+    // Normal Events page
     else if (document.querySelector(".events-page")) {
 
         loadEvents();
 
     }
 
-    // ========================================================
-    // HOME PAGE
-    // ========================================================
-
-    else if (
-        document.querySelector(
-            ".events-section .events-grid"
-        )
-    ) {
+    // Home page
+    else if (document.querySelector(".events-section")) {
 
         loadHomeEvents();
 
@@ -69,6 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setupSearchAndFilters();
 
 });
+
 
 
 // ============================================================
@@ -92,22 +82,16 @@ function setupMobileMenu() {
     }
 
 
-    mobileMenuBtn.addEventListener(
-        "click",
-        function () {
+    mobileMenuBtn.addEventListener("click", function () {
 
-            navLinks.classList.toggle(
-                "active-mobile"
-            );
+        navLinks.classList.toggle("active-mobile");
 
-            navAuth.classList.toggle(
-                "active-mobile"
-            );
+        navAuth.classList.toggle("active-mobile");
 
-        }
-    );
+    });
 
 }
+
 
 
 // ============================================================
@@ -134,6 +118,7 @@ function getLoggedInUser() {
     }
 
 }
+
 
 
 // ============================================================
@@ -198,17 +183,13 @@ async function loadEvents() {
 
         eventsGrid.innerHTML = `
 
-            <div
-                style="
-                    grid-column: 1 / -1;
-                    text-align: center;
-                    padding: 60px 20px;
-                "
-            >
+            <div style="
+                grid-column: 1 / -1;
+                text-align: center;
+                padding: 60px 20px;
+            ">
 
-                <h2>
-                    Unable to load events
-                </h2>
+                <h2>Unable to load events</h2>
 
                 <p>
                     Please make sure the Spring Boot backend
@@ -228,8 +209,9 @@ async function loadEvents() {
 }
 
 
+
 // ============================================================
-// LOAD UPCOMING EVENTS ON HOME PAGE
+// LOAD HOME PAGE EVENTS
 // ============================================================
 
 async function loadHomeEvents() {
@@ -248,7 +230,7 @@ async function loadHomeEvents() {
     try {
 
         console.log(
-            "Loading upcoming events for home page..."
+            "Loading upcoming events for Home page..."
         );
 
 
@@ -259,7 +241,7 @@ async function loadHomeEvents() {
         if (!response.ok) {
 
             throw new Error(
-                "Failed to load events. Status: " +
+                "Failed to load home events. Status: " +
                 response.status
             );
 
@@ -271,122 +253,28 @@ async function loadHomeEvents() {
 
 
         console.log(
-            "Home page events received:",
+            "Home events received:",
             events
         );
 
 
-        // ====================================================
-        // CURRENT DATE
-        // ====================================================
-
-        const today =
-            new Date();
-
-        today.setHours(
-            0,
-            0,
-            0,
-            0
-        );
+        eventsGrid.innerHTML = "";
 
 
-        // ====================================================
-        // FILTER UPCOMING EVENTS
-        // ====================================================
-
-        const upcomingEvents =
-            events.filter(function (event) {
-
-                if (!event.date) {
-                    return false;
-                }
-
-
-                const eventDate =
-                    new Date(event.date);
-
-
-                eventDate.setHours(
-                    0,
-                    0,
-                    0,
-                    0
-                );
-
-
-                return eventDate >= today;
-
-            });
-
-
-        // ====================================================
-        // SORT EVENTS BY DATE
-        // ====================================================
-
-        upcomingEvents.sort(
-            function (a, b) {
-
-                const dateA =
-                    new Date(a.date);
-
-                const dateB =
-                    new Date(b.date);
-
-
-                // If same date, sort by start time
-                if (
-                    dateA.getTime() ===
-                    dateB.getTime()
-                ) {
-
-                    return compareTime(
-                        a.startTime,
-                        b.startTime
-                    );
-
-                }
-
-
-                return dateA - dateB;
-
-            }
-        );
-
-
-        // ====================================================
-        // SHOW FIRST 6 EVENTS
-        // ====================================================
-
-        const eventsToShow =
-            upcomingEvents.slice(0, 6);
-
-
-        // ====================================================
-        // NO UPCOMING EVENTS
-        // ====================================================
-
-        if (
-            eventsToShow.length === 0
-        ) {
+        if (!events || events.length === 0) {
 
             eventsGrid.innerHTML = `
 
-                <div
-                    style="
-                        grid-column: 1 / -1;
-                        text-align: center;
-                        padding: 60px 20px;
-                    "
-                >
+                <div style="
+                    grid-column: 1 / -1;
+                    text-align: center;
+                    padding: 60px 20px;
+                ">
 
-                    <h2>
-                        No Upcoming Events
-                    </h2>
+                    <h2>No Upcoming Events</h2>
 
                     <p>
-                        There are currently no upcoming
-                        events on campus.
+                        There are currently no events available.
                     </p>
 
                 </div>
@@ -398,51 +286,49 @@ async function loadHomeEvents() {
         }
 
 
-        // ====================================================
-        // DISPLAY EVENTS
-        // ====================================================
+        /*
+         * Display upcoming events.
+         *
+         * We show the first few events on the
+         * Home page. The complete list is available
+         * on events.html.
+         */
 
-        eventsGrid.innerHTML = "";
-
-
-        eventsToShow.forEach(
-            function (event) {
-
-                const card =
-                    createEventCard(event);
+        const upcomingEvents =
+            events.slice(0, 4);
 
 
-                eventsGrid.appendChild(card);
+        upcomingEvents.forEach(function (event) {
 
-            }
-        );
+            const card =
+                createEventCard(event);
+
+            eventsGrid.appendChild(card);
+
+        });
 
 
     } catch (error) {
 
         console.error(
-            "Error loading home events:",
+            "Error loading Home page events:",
             error
         );
 
 
         eventsGrid.innerHTML = `
 
-            <div
-                style="
-                    grid-column: 1 / -1;
-                    text-align: center;
-                    padding: 60px 20px;
-                "
-            >
+            <div style="
+                grid-column: 1 / -1;
+                text-align: center;
+                padding: 60px 20px;
+            ">
 
-                <h2>
-                    Unable to load events
-                </h2>
+                <h2>Unable to load events</h2>
 
                 <p>
-                    Please make sure the Spring Boot
-                    backend is running on port 8080.
+                    Please make sure the Spring Boot backend
+                    is running.
                 </p>
 
                 <p style="color:red;">
@@ -457,65 +343,6 @@ async function loadHomeEvents() {
 
 }
 
-
-// ============================================================
-// COMPARE EVENT TIMES
-// ============================================================
-
-function compareTime(
-    timeA,
-    timeB
-) {
-
-    if (!timeA && !timeB) {
-        return 0;
-    }
-
-    if (!timeA) {
-        return 1;
-    }
-
-    if (!timeB) {
-        return -1;
-    }
-
-
-    const partsA =
-        timeA
-            .toString()
-            .split(":");
-
-
-    const partsB =
-        timeB
-            .toString()
-            .split(":");
-
-
-    const hourA =
-        parseInt(partsA[0], 10) || 0;
-
-
-    const hourB =
-        parseInt(partsB[0], 10) || 0;
-
-
-    const minuteA =
-        parseInt(partsA[1], 10) || 0;
-
-
-    const minuteB =
-        parseInt(partsB[1], 10) || 0;
-
-
-    if (hourA !== hourB) {
-        return hourA - hourB;
-    }
-
-
-    return minuteA - minuteB;
-
-}
 
 
 // ============================================================
@@ -555,10 +382,7 @@ async function loadMyEvents() {
     // USER NOT LOGGED IN
     // ========================================================
 
-    if (
-        !loggedInUser ||
-        !loggedInUser.id
-    ) {
+    if (!loggedInUser || !loggedInUser.id) {
 
         console.log(
             "No logged-in user found."
@@ -619,10 +443,6 @@ async function loadMyEvents() {
         );
 
 
-        // ====================================================
-        // GET ONLY EVENTS JOINED BY CURRENT USER
-        // ====================================================
-
         const response =
             await fetch(
                 API_URL +
@@ -641,17 +461,268 @@ async function loadMyEvents() {
         }
 
 
+        const participants =
+            await response.json();
+
+
+        console.log(
+            "My event participants:",
+            participants
+        );
+
+
+        eventsGrid.innerHTML = "";
+
+
+        // ====================================================
+        // NO EVENTS
+        // ====================================================
+
+        if (
+            !participants ||
+            participants.length === 0
+        ) {
+
+            if (eventCount) {
+
+                eventCount.textContent =
+                    "0 Events";
+
+            }
+
+
+            if (noEventsMessage) {
+
+                noEventsMessage.style.display =
+                    "block";
+
+            }
+
+
+            return;
+
+        }
+
+
+        // Hide empty message
+
+        if (noEventsMessage) {
+
+            noEventsMessage.style.display =
+                "none";
+
+        }
+
+
+        // Update count
+
+        if (eventCount) {
+
+            eventCount.textContent =
+                participants.length +
+                (
+                    participants.length === 1
+                        ? " Event"
+                        : " Events"
+                );
+
+        }
+
+
+        // ====================================================
+        // DISPLAY JOINED EVENTS
+        // ====================================================
+
+        participants.forEach(
+            function (participant) {
+
+                if (!participant.event) {
+
+                    console.warn(
+                        "Participant does not contain event:",
+                        participant
+                    );
+
+                    return;
+
+                }
+
+
+                const card =
+                    createEventCard(
+                        participant.event
+                    );
+
+
+                eventsGrid.appendChild(card);
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Error loading my events:",
+            error
+        );
+
+
+        eventsGrid.innerHTML = `
+
+            <div style="
+                grid-column: 1 / -1;
+                text-align: center;
+                padding: 60px 20px;
+            ">
+
+                <h2>
+                    Unable to load your events
+                </h2>
+
+                <p>
+                    Please make sure the backend is running.
+                </p>
+
+                <p style="color:red;">
+                    ${escapeHTML(error.message)}
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+// ============================================================
+// LOAD ORGANIZER EVENTS
+// ============================================================
+
+async function loadOrganizerEvents() {
+
+    const eventsGrid =
+        document.getElementById(
+            "organizerEventsGrid"
+        );
+
+
+    const noEventsMessage =
+        document.getElementById(
+            "noOrganizerEventsMessage"
+        );
+
+
+    const eventCount =
+        document.getElementById(
+            "organizerEventCount"
+        );
+
+
+    if (!eventsGrid) {
+        return;
+    }
+
+
+    const loggedInUser =
+        getLoggedInUser();
+
+
+    // ========================================================
+    // USER NOT LOGGED IN
+    // ========================================================
+
+    if (!loggedInUser || !loggedInUser.id) {
+
+        console.log(
+            "No logged-in organizer found."
+        );
+
+
+        eventsGrid.innerHTML = "";
+
+
+        if (eventCount) {
+
+            eventCount.textContent =
+                "0 Events";
+
+        }
+
+
+        if (noEventsMessage) {
+
+            noEventsMessage.style.display =
+                "block";
+
+
+            noEventsMessage.innerHTML = `
+
+                <h2>
+                    Please Login
+                </h2>
+
+                <p>
+                    Login to manage your events.
+                </p>
+
+                <br>
+
+                <a
+                    href="login.html"
+                    class="btn btn-primary"
+                >
+                    Login
+                </a>
+
+            `;
+
+        }
+
+
+        return;
+
+    }
+
+
+    try {
+
+        console.log(
+            "Loading events created by organizer:",
+            loggedInUser.id
+        );
+
+
+        const response =
+            await fetch(
+                API_URL +
+                "/organizer/" +
+                loggedInUser.id
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load organizer events. Status: " +
+                response.status
+            );
+
+        }
+
+
         const events =
             await response.json();
 
 
         console.log(
-            "My events:",
+            "Organizer events received:",
             events
         );
 
-
-        // Clear previous events
 
         eventsGrid.innerHTML = "";
 
@@ -712,54 +783,37 @@ async function loadMyEvents() {
 
 
         // ====================================================
-        // DISPLAY JOINED EVENTS
+        // DISPLAY ORGANIZER EVENTS
         // ====================================================
 
-        events.forEach(
-            function (event) {
+        events.forEach(function (event) {
 
-                if (!event) {
+            const card =
+                createEventCard(event);
 
-                    console.warn(
-                        "Invalid event:",
-                        event
-                    );
+            eventsGrid.appendChild(card);
 
-                    return;
-
-                }
-
-
-                const card =
-                    createEventCard(event);
-
-
-                eventsGrid.appendChild(card);
-
-            }
-        );
+        });
 
 
     } catch (error) {
 
         console.error(
-            "Error loading my events:",
+            "Error loading organizer events:",
             error
         );
 
 
         eventsGrid.innerHTML = `
 
-            <div
-                style="
-                    grid-column: 1 / -1;
-                    text-align: center;
-                    padding: 60px 20px;
-                "
-            >
+            <div style="
+                grid-column: 1 / -1;
+                text-align: center;
+                padding: 60px 20px;
+            ">
 
                 <h2>
-                    Unable to load your events
+                    Unable to load your created events
                 </h2>
 
                 <p>
@@ -777,6 +831,7 @@ async function loadMyEvents() {
     }
 
 }
+
 
 
 // ============================================================
@@ -811,17 +866,13 @@ function renderEvents(events) {
 
         eventsGrid.innerHTML = `
 
-            <div
-                style="
-                    grid-column: 1 / -1;
-                    text-align: center;
-                    padding: 60px 20px;
-                "
-            >
+            <div style="
+                grid-column: 1 / -1;
+                text-align: center;
+                padding: 60px 20px;
+            ">
 
-                <h2>
-                    No Events Available
-                </h2>
+                <h2>No Events Available</h2>
 
                 <p>
                     There are currently no events.
@@ -836,22 +887,20 @@ function renderEvents(events) {
     }
 
 
-    events.forEach(
-        function (event) {
+    events.forEach(function (event) {
 
-            const card =
-                createEventCard(event);
+        const card =
+            createEventCard(event);
 
+        eventsGrid.appendChild(card);
 
-            eventsGrid.appendChild(card);
-
-        }
-    );
+    });
 
 
     filterEvents();
 
 }
+
 
 
 // ============================================================
@@ -887,8 +936,6 @@ function createEventCard(event) {
                 style="
                     background-image:
                     url('${escapeAttribute(event.image)}');
-                    background-size: cover;
-                    background-position: center;
                 "
             >
 
@@ -978,6 +1025,60 @@ function createEventCard(event) {
 
 
     // ========================================================
+    // CHECK ORGANIZER PAGE
+    // ========================================================
+
+    const isOrganizerPage =
+        window.location.pathname
+            .toLowerCase()
+            .includes("organizer-events.html");
+
+
+    // ========================================================
+    // ORGANIZER BUTTONS
+    // ========================================================
+
+    let organizerButtonsHTML = "";
+
+
+    if (isOrganizerPage) {
+
+        organizerButtonsHTML = `
+
+            <div style="
+                display: flex;
+                gap: 10px;
+                margin-top: 10px;
+            ">
+
+                <button
+                    class="btn btn-outline"
+                    style="flex: 1;"
+                    onclick="editEvent(${event.id})"
+                >
+                    Edit Event
+                </button>
+
+                <button
+                    class="btn btn-outline"
+                    style="
+                        flex: 1;
+                        color: #dc3545;
+                        border-color: #dc3545;
+                    "
+                    onclick="deleteEvent(${event.id})"
+                >
+                    Delete
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+
+    // ========================================================
     // CARD HTML
     // ========================================================
 
@@ -1005,24 +1106,31 @@ function createEventCard(event) {
                 </div>
 
                 <div class="meta-item">
+
                     ⏰ ${escapeHTML(startTime)}
+
                     ${
                         endTime
                             ? " - " +
                               escapeHTML(endTime)
                             : ""
                     }
+
                 </div>
 
                 <div class="meta-item">
+
                     📍 ${escapeHTML(
                         event.location ||
                         "Location not specified"
                     )}
+
                 </div>
 
                 <div class="meta-item">
+
                     👥 ${joined} / ${capacity} Joined
+
                 </div>
 
             </div>
@@ -1036,6 +1144,8 @@ function createEventCard(event) {
                     View Details
                 </button>
 
+                ${organizerButtonsHTML}
+
             </div>
 
         </div>
@@ -1048,6 +1158,7 @@ function createEventCard(event) {
 }
 
 
+
 // ============================================================
 // EVENT COUNT
 // ============================================================
@@ -1055,9 +1166,7 @@ function createEventCard(event) {
 function updateEventCount(count) {
 
     const eventCount =
-        document.querySelector(
-            ".event-count"
-        );
+        document.querySelector(".event-count");
 
 
     if (!eventCount) {
@@ -1076,15 +1185,12 @@ function updateEventCount(count) {
 }
 
 
+
 // ============================================================
 // SEARCH + FILTER SETUP
 // ============================================================
 
 function setupSearchAndFilters() {
-
-    // ========================================================
-    // EVENTS PAGE SEARCH
-    // ========================================================
 
     const searchInput =
         document.getElementById(
@@ -1163,90 +1269,8 @@ function setupSearchAndFilters() {
         }
     );
 
-
-    // ========================================================
-    // HOME PAGE SEARCH
-    // ========================================================
-
-    const homeSearchInput =
-        document.getElementById(
-            "searchInput"
-        );
-
-
-    const homeSearchBtn =
-        document.getElementById(
-            "searchBtn"
-        );
-
-
-    if (homeSearchBtn) {
-
-        homeSearchBtn.addEventListener(
-            "click",
-            function () {
-
-                const searchText =
-                    homeSearchInput
-                        ? homeSearchInput.value.trim()
-                        : "";
-
-
-                if (searchText !== "") {
-
-                    window.location.href =
-                        "events.html?search=" +
-                        encodeURIComponent(
-                            searchText
-                        );
-
-                } else {
-
-                    window.location.href =
-                        "events.html";
-
-                }
-
-            }
-        );
-
-    }
-
-
-    if (homeSearchInput) {
-
-        homeSearchInput.addEventListener(
-            "keydown",
-            function (event) {
-
-                if (
-                    event.key === "Enter"
-                ) {
-
-                    const searchText =
-                        homeSearchInput.value.trim();
-
-
-                    if (
-                        searchText !== ""
-                    ) {
-
-                        window.location.href =
-                            "events.html?search=" +
-                            encodeURIComponent(
-                                searchText
-                            );
-
-                    }
-
-                }
-
-            }
-        );
-
-    }
-
 }
+
 
 
 // ============================================================
@@ -1364,6 +1388,7 @@ function filterEvents() {
 }
 
 
+
 // ============================================================
 // UPDATE VISIBLE EVENT COUNT
 // ============================================================
@@ -1392,6 +1417,7 @@ function updateVisibleEventCount(count) {
 }
 
 
+
 // ============================================================
 // VIEW EVENT
 // ============================================================
@@ -1403,6 +1429,159 @@ function viewEvent(eventId) {
         eventId;
 
 }
+
+
+
+// ============================================================
+// EDIT ORGANIZER EVENT
+// ============================================================
+
+function editEvent(eventId) {
+
+    window.location.href =
+        "edit-event.html?id=" +
+        eventId;
+
+}
+
+
+
+// ============================================================
+// DELETE ORGANIZER EVENT
+// ============================================================
+
+async function deleteEvent(eventId) {
+
+    const loggedInUser =
+        getLoggedInUser();
+
+
+    if (
+        !loggedInUser ||
+        !loggedInUser.id
+    ) {
+
+        alert(
+            "Please login first."
+        );
+
+        return;
+
+    }
+
+
+    // ========================================================
+    // CONFIRM DELETE
+    // ========================================================
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this event?"
+        );
+
+
+    if (!confirmDelete) {
+        return;
+    }
+
+
+    try {
+
+        console.log(
+            "Deleting event:",
+            eventId,
+            "by organizer:",
+            loggedInUser.id
+        );
+
+
+        const response =
+            await fetch(
+                API_URL +
+                "/" +
+                eventId +
+                "/organizer/" +
+                loggedInUser.id,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        // ====================================================
+        // SUCCESS
+        // ====================================================
+
+        if (response.ok) {
+
+            alert(
+                "Event deleted successfully."
+            );
+
+
+            /*
+             * Reload the page so the deleted event
+             * disappears from the organizer list.
+             */
+
+            window.location.reload();
+
+            return;
+
+        }
+
+
+        // ====================================================
+        // ERROR
+        // ====================================================
+
+        let errorMessage =
+            "Unable to delete event.";
+
+
+        try {
+
+            const data =
+                await response.json();
+
+
+            if (data.message) {
+
+                errorMessage =
+                    data.message;
+
+            }
+
+        } catch (error) {
+
+            console.log(
+                "No JSON error response."
+            );
+
+        }
+
+
+        alert(
+            errorMessage
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Delete event error:",
+            error
+        );
+
+
+        alert(
+            "Unable to connect to server."
+        );
+
+    }
+
+}
+
 
 
 // ============================================================
@@ -1455,9 +1634,7 @@ async function loadEventDetails() {
             await response.json();
 
 
-        displayEventDetails(
-            event
-        );
+        displayEventDetails(event);
 
 
         await checkJoinedStatus(
@@ -1489,6 +1666,7 @@ async function loadEventDetails() {
     }
 
 }
+
 
 
 // ============================================================
@@ -1579,9 +1757,7 @@ function displayEventDetails(event) {
     if (date) {
 
         date.textContent =
-            formatDate(
-                event.date
-            );
+            formatDate(event.date);
 
     }
 
@@ -1589,15 +1765,11 @@ function displayEventDetails(event) {
     if (time) {
 
         const start =
-            formatTime(
-                event.startTime
-            );
+            formatTime(event.startTime);
 
 
         const end =
-            formatTime(
-                event.endTime
-            );
+            formatTime(event.endTime);
 
 
         time.textContent =
@@ -1690,12 +1862,6 @@ function displayEventDetails(event) {
                     event.image
                 )}')`;
 
-            image.style.backgroundSize =
-                "cover";
-
-            image.style.backgroundPosition =
-                "center";
-
         } else {
 
             image.style.backgroundImage =
@@ -1711,6 +1877,7 @@ function displayEventDetails(event) {
     );
 
 }
+
 
 
 // ============================================================
@@ -1774,13 +1941,12 @@ function updateJoinInformation(event) {
 }
 
 
+
 // ============================================================
 // CHECK JOINED STATUS
 // ============================================================
 
-async function checkJoinedStatus(
-    eventId
-) {
+async function checkJoinedStatus(eventId) {
 
     const joinButton =
         document.getElementById(
@@ -1871,6 +2037,7 @@ async function checkJoinedStatus(
 }
 
 
+
 // ============================================================
 // SET JOIN BUTTON
 // ============================================================
@@ -1902,6 +2069,7 @@ function setJoinButton() {
 }
 
 
+
 // ============================================================
 // SET ALREADY JOINED BUTTON
 // ============================================================
@@ -1931,6 +2099,7 @@ function setJoinedButton() {
         null;
 
 }
+
 
 
 // ============================================================
@@ -2066,9 +2235,7 @@ async function joinEvent() {
         );
 
 
-        // ====================================================
-        // DUPLICATE JOIN
-        // ====================================================
+        // Duplicate join
 
         if (
             errorMessage
@@ -2089,9 +2256,7 @@ async function joinEvent() {
         }
 
 
-        // ====================================================
-        // EVENT FULL
-        // ====================================================
+        // Event full
 
         if (
             errorMessage
@@ -2117,9 +2282,7 @@ async function joinEvent() {
         }
 
 
-        // ====================================================
-        // OTHER ERROR
-        // ====================================================
+        // Other error
 
         alert(
             errorMessage
@@ -2157,6 +2320,7 @@ async function joinEvent() {
     }
 
 }
+
 
 
 // ============================================================
@@ -2219,13 +2383,12 @@ async function reloadEventAfterJoin(
 }
 
 
+
 // ============================================================
 // DATE FORMAT
 // ============================================================
 
-function formatDate(
-    dateValue
-) {
+function formatDate(dateValue) {
 
     if (!dateValue) {
         return "";
@@ -2268,13 +2431,12 @@ function formatDate(
 }
 
 
+
 // ============================================================
 // TIME FORMAT
 // ============================================================
 
-function formatTime(
-    timeValue
-) {
+function formatTime(timeValue) {
 
     if (!timeValue) {
         return "";
@@ -2287,9 +2449,7 @@ function formatTime(
             .split(":");
 
 
-    if (
-        parts.length < 2
-    ) {
+    if (parts.length < 2) {
 
         return timeValue;
 
@@ -2307,9 +2467,7 @@ function formatTime(
         parts[1];
 
 
-    if (
-        isNaN(hours)
-    ) {
+    if (isNaN(hours)) {
 
         return timeValue;
 
@@ -2326,9 +2484,7 @@ function formatTime(
         hours % 12;
 
 
-    if (
-        hours === 0
-    ) {
+    if (hours === 0) {
 
         hours = 12;
 
@@ -2346,13 +2502,12 @@ function formatTime(
 }
 
 
+
 // ============================================================
 // HTML ESCAPING
 // ============================================================
 
-function escapeHTML(
-    value
-) {
+function escapeHTML(value) {
 
     if (
         value === null ||
@@ -2389,13 +2544,12 @@ function escapeHTML(
 }
 
 
+
 // ============================================================
 // ATTRIBUTE ESCAPING
 // ============================================================
 
-function escapeAttribute(
-    value
-) {
+function escapeAttribute(value) {
 
     if (!value) {
         return "";

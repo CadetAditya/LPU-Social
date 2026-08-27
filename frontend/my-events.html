@@ -5,7 +5,10 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>LPU Social | My Events</title>
 
@@ -18,19 +21,30 @@
 
 </head>
 
+
 <body>
 
-    <!-- ================= NAVBAR ================= -->
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
 
     <nav class="navbar">
 
         <div class="container nav-container">
 
-            <a href="index.html" class="logo">
+            <a
+                href="index.html"
+                class="logo"
+            >
                 LPU SOCIAL
             </a>
 
-            <ul class="nav-links" id="navLinks">
+
+            <ul
+                class="nav-links"
+                id="navLinks"
+            >
 
                 <li>
                     <a href="index.html">
@@ -51,25 +65,42 @@
                 </li>
 
                 <li>
-                    <a href="my-events.html" class="active">
+                    <a
+                        href="my-events.html"
+                        class="active"
+                    >
                         My Events
                     </a>
                 </li>
 
             </ul>
 
-            <!-- AUTHENTICATION AREA -->
-            <div class="nav-auth" id="navAuth">
 
-                <a href="login.html" class="login-link">
+            <!-- AUTHENTICATION -->
+
+            <div
+                class="nav-auth"
+                id="navAuth"
+            >
+
+                <a
+                    href="login.html"
+                    class="login-link"
+                >
                     Login
                 </a>
 
-                <a href="register.html" class="btn btn-primary">
+                <a
+                    href="registration.html"
+                    class="btn btn-primary"
+                >
                     Sign Up
                 </a>
 
             </div>
+
+
+            <!-- MOBILE MENU -->
 
             <button
                 class="menu-toggle"
@@ -83,11 +114,19 @@
     </nav>
 
 
-    <!-- ================= MY EVENTS ================= -->
+
+    <!-- =====================================================
+         MY EVENTS
+    ====================================================== -->
 
     <main class="events-page">
 
         <div class="container">
+
+
+            <!-- =================================================
+                 PAGE HEADER
+            ================================================== -->
 
             <div class="events-page-heading">
 
@@ -102,10 +141,11 @@
                     </h1>
 
                     <p>
-                        Events you have joined.
+                        Manage the events you joined and created.
                     </p>
 
                 </div>
+
 
                 <span
                     class="event-count"
@@ -117,50 +157,163 @@
             </div>
 
 
-            <!-- ================= EVENT GRID ================= -->
 
-            <div
-                class="events-grid"
-                id="myEventsGrid"
-            >
+            <!-- =================================================
+                 EVENTS I JOINED
+            ================================================== -->
 
-                <!-- Joined events will appear here -->
+            <section class="my-events-section">
 
-            </div>
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Events I Joined
+                        </h2>
+
+                        <p>
+                            Events you have joined.
+                        </p>
+
+                    </div>
+
+                    <span
+                        class="event-count"
+                        id="joinedEventCount"
+                    >
+                        0 Events
+                    </span>
+
+                </div>
 
 
-            <!-- ================= EMPTY MESSAGE ================= -->
-
-            <div
-                id="noEventsMessage"
-                style="display: none; text-align: center; padding: 60px 20px;"
-            >
-
-                <h2>
-                    No Events Yet
-                </h2>
-
-                <p>
-                    You haven't joined any events yet.
-                </p>
-
-                <br>
-
-                <a
-                    href="events.html"
-                    class="btn btn-primary"
+                <div
+                    class="events-grid"
+                    id="myEventsGrid"
                 >
-                    Explore Events
-                </a>
 
-            </div>
+                    <!-- Joined events will appear here -->
+
+                </div>
+
+
+                <div
+                    id="noJoinedEventsMessage"
+                    style="
+                        display: none;
+                        text-align: center;
+                        padding: 50px 20px;
+                    "
+                >
+
+                    <h2>
+                        No Joined Events
+                    </h2>
+
+                    <p>
+                        You haven't joined any events yet.
+                    </p>
+
+                    <br>
+
+                    <a
+                        href="events.html"
+                        class="btn btn-primary"
+                    >
+                        Explore Events
+                    </a>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 EVENTS I CREATED
+            ================================================== -->
+
+            <section
+                class="my-events-section"
+                style="margin-top: 70px;"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Events I Created
+                        </h2>
+
+                        <p>
+                            Events that you have created.
+                        </p>
+
+                    </div>
+
+
+                    <span
+                        class="event-count"
+                        id="createdEventCount"
+                    >
+                        0 Events
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="events-grid"
+                    id="createdEventsGrid"
+                >
+
+                    <!-- Created events will appear here -->
+
+                </div>
+
+
+                <div
+                    id="noCreatedEventsMessage"
+                    style="
+                        display: none;
+                        text-align: center;
+                        padding: 50px 20px;
+                    "
+                >
+
+                    <h2>
+                        No Created Events
+                    </h2>
+
+                    <p>
+                        You haven't created any events yet.
+                    </p>
+
+                    <br>
+
+                    <a
+                        href="create-event.html"
+                        class="btn btn-primary"
+                    >
+                        Create an Event
+                    </a>
+
+                </div>
+
+            </section>
+
 
         </div>
 
     </main>
 
 
-    <!-- ================= FOOTER ================= -->
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
     <footer class="footer">
 
@@ -174,6 +327,7 @@
                 Discover • Create • Participate
             </p>
 
+
             <div class="footer-links">
 
                 <a href="index.html">
@@ -184,11 +338,16 @@
                     Events
                 </a>
 
+                <a href="create-event.html">
+                    Create Event
+                </a>
+
                 <a href="my-events.html">
                     My Events
                 </a>
 
             </div>
+
 
             <div class="copyright">
                 © 2026 LPU Social. All rights reserved.
@@ -199,12 +358,15 @@
     </footer>
 
 
-    <!-- ================= JAVASCRIPT ================= -->
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="auth.js"></script>
 
     <script src="script.js"></script>
 
-    <!-- Authentication -->
-    <script src="auth.js"></script>
 
 </body>
 

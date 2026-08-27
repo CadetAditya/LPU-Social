@@ -31,7 +31,20 @@ public class EventService {
         this.userRepository = userRepository;
     }
 
+    // ==========================================
+// GET EVENTS CREATED BY USER
+// ==========================================
 
+public List<Event> getEventsCreatedByUser(Long userId) {
+
+    User user = userRepository
+            .findById(userId)
+            .orElseThrow(() ->
+                    new RuntimeException("User not found.")
+            );
+
+    return eventRepository.findByOrganizer(user);
+}
     // ==========================================
     // CREATE EVENT
     // ==========================================
@@ -67,14 +80,55 @@ public class EventService {
     }
 
 
-    // ==========================================
-    // DELETE EVENT
-    // ==========================================
+   // ==========================================
+// DELETE EVENT
+// ==========================================
 
-    public void deleteEvent(Long id) {
+public void deleteEvent(
+        Long eventId,
+        Long userId) {
 
-        eventRepository.deleteById(id);
+    // Find event
+    Event event =
+            eventRepository
+                    .findById(eventId)
+                    .orElseThrow(() ->
+                            new RuntimeException(
+                                    "Event not found."
+                            )
+                    );
+
+
+    // Find logged-in user
+    User user =
+            userRepository
+                    .findById(userId)
+                    .orElseThrow(() ->
+                            new RuntimeException(
+                                    "User not found."
+                            )
+                    );
+
+
+    // Check whether this user is the organizer
+    if (
+        event.getOrganizer() == null ||
+        event.getOrganizer().getId() == null ||
+        !event.getOrganizer()
+                .getId()
+                .equals(user.getId())
+    ) {
+
+        throw new RuntimeException(
+                "You are not allowed to delete this event."
+        );
+
     }
+
+
+    // Delete event
+    eventRepository.delete(event);
+}
 
 
     // ==========================================
