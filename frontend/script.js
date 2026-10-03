@@ -350,250 +350,78 @@ async function loadHomeEvents() {
 // ============================================================
 
 async function loadMyEvents() {
+    const joinedGrid = document.getElementById("myEventsGrid");
+    const createdGrid = document.getElementById("createdEventsGrid");
+    const noJoinedMessage = document.getElementById("noJoinedEventsMessage");
+    const noCreatedMessage = document.getElementById("noCreatedEventsMessage");
+    const joinedCount = document.getElementById("joinedEventCount");
+    const createdCount = document.getElementById("createdEventCount");
+    const overallCount = document.getElementById("myEventCount");
 
-    const eventsGrid =
-        document.getElementById(
-            "myEventsGrid"
-        );
+    if (!joinedGrid && !createdGrid) return;
 
-
-    const noEventsMessage =
-        document.getElementById(
-            "noEventsMessage"
-        );
-
-
-    const eventCount =
-        document.getElementById(
-            "myEventCount"
-        );
-
-
-    if (!eventsGrid) {
-        return;
-    }
-
-
-    const loggedInUser =
-        getLoggedInUser();
-
-
-    // ========================================================
-    // USER NOT LOGGED IN
-    // ========================================================
+    const loggedInUser = getLoggedInUser();
 
     if (!loggedInUser || !loggedInUser.id) {
-
-        console.log(
-            "No logged-in user found."
-        );
-
-
-        eventsGrid.innerHTML = "";
-
-
-        if (eventCount) {
-
-            eventCount.textContent =
-                "0 Events";
-
-        }
-
-
-        if (noEventsMessage) {
-
-            noEventsMessage.style.display =
-                "block";
-
-
-            noEventsMessage.innerHTML = `
-
-                <h2>
-                    Please Login
-                </h2>
-
-                <p>
-                    Login to see the events you have joined.
-                </p>
-
-                <br>
-
-                <a
-                    href="login.html"
-                    class="btn btn-primary"
-                >
-                    Login
-                </a>
-
+        if (joinedGrid) joinedGrid.innerHTML = "";
+        if (createdGrid) createdGrid.innerHTML = "";
+        if (noJoinedMessage) {
+            noJoinedMessage.style.display = "block";
+            noJoinedMessage.innerHTML = `
+                <h2>Please Login</h2>
+                <p>Login to see your joined and created events.</p>
+                <br><a href="login.html" class="btn btn-primary">Login</a>
             `;
-
         }
-
-
         return;
-
     }
 
-
+    // 1. Fetch Joined Events
     try {
+        const responseJoined = await fetch(API_URL + "/user/" + loggedInUser.id);
+        if (responseJoined.ok) {
+            const joinedList = await responseJoined.json();
+            if (joinedGrid) joinedGrid.innerHTML = "";
 
-        console.log(
-            "Loading events for user:",
-            loggedInUser.id
-        );
-
-
-        const response =
-            await fetch(
-                API_URL +
-                "/user/" +
-                loggedInUser.id
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Failed to load your events. Status: " +
-                response.status
-            );
-
-        }
-
-
-        const participants =
-            await response.json();
-
-
-        console.log(
-            "My event participants:",
-            participants
-        );
-
-
-        eventsGrid.innerHTML = "";
-
-
-        // ====================================================
-        // NO EVENTS
-        // ====================================================
-
-        if (
-            !participants ||
-            participants.length === 0
-        ) {
-
-            if (eventCount) {
-
-                eventCount.textContent =
-                    "0 Events";
-
+            if (!joinedList || joinedList.length === 0) {
+                if (joinedCount) joinedCount.textContent = "0 Events";
+                if (noJoinedMessage) noJoinedMessage.style.display = "block";
+            } else {
+                if (noJoinedMessage) noJoinedMessage.style.display = "none";
+                if (joinedCount) joinedCount.textContent = joinedList.length + (joinedList.length === 1 ? " Event" : " Events");
+                joinedList.forEach(item => {
+                    const eventObj = item.event || item;
+                    const card = createEventCard(eventObj);
+                    if (joinedGrid) joinedGrid.appendChild(card);
+                });
             }
-
-
-            if (noEventsMessage) {
-
-                noEventsMessage.style.display =
-                    "block";
-
-            }
-
-
-            return;
-
         }
-
-
-        // Hide empty message
-
-        if (noEventsMessage) {
-
-            noEventsMessage.style.display =
-                "none";
-
-        }
-
-
-        // Update count
-
-        if (eventCount) {
-
-            eventCount.textContent =
-                participants.length +
-                (
-                    participants.length === 1
-                        ? " Event"
-                        : " Events"
-                );
-
-        }
-
-
-        // ====================================================
-        // DISPLAY JOINED EVENTS
-        // ====================================================
-
-        participants.forEach(
-            function (participant) {
-
-                if (!participant.event) {
-
-                    console.warn(
-                        "Participant does not contain event:",
-                        participant
-                    );
-
-                    return;
-
-                }
-
-
-                const card =
-                    createEventCard(
-                        participant.event
-                    );
-
-
-                eventsGrid.appendChild(card);
-
-            }
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Error loading my events:",
-            error
-        );
-
-
-        eventsGrid.innerHTML = `
-
-            <div style="
-                grid-column: 1 / -1;
-                text-align: center;
-                padding: 60px 20px;
-            ">
-
-                <h2>
-                    Unable to load your events
-                </h2>
-
-                <p>
-                    Please make sure the backend is running.
-                </p>
-
-                <p style="color:red;">
-                    ${escapeHTML(error.message)}
-                </p>
-
-            </div>
-
-        `;
-
+    } catch (err) {
+        console.error("Error loading joined events:", err);
     }
 
+    // 2. Fetch Created Events
+    try {
+        const responseCreated = await fetch(API_URL + "/organizer/" + loggedInUser.id);
+        if (responseCreated.ok) {
+            const createdList = await responseCreated.json();
+            if (createdGrid) createdGrid.innerHTML = "";
+
+            if (!createdList || createdList.length === 0) {
+                if (createdCount) createdCount.textContent = "0 Events";
+                if (noCreatedMessage) noCreatedMessage.style.display = "block";
+            } else {
+                if (noCreatedMessage) noCreatedMessage.style.display = "none";
+                if (createdCount) createdCount.textContent = createdList.length + (createdList.length === 1 ? " Event" : " Events");
+                createdList.forEach(eventObj => {
+                    const card = createEventCard(eventObj);
+                    if (createdGrid) createdGrid.appendChild(card);
+                });
+            }
+        }
+    } catch (err) {
+        console.error("Error loading created events:", err);
+    }
 }
 
 
@@ -917,60 +745,36 @@ function createEventCard(event) {
         "event-card";
 
 
-    // ========================================================
-    // IMAGE
-    // ========================================================
+    // Tag HTML
+    let tagBadgeHTML = `<span class="faculty-tag">📅 CAMPUS EVENT</span>`;
+    if (event.organizer && event.organizer.role) {
+        const roleUpper = event.organizer.role.toUpperCase();
+        if (roleUpper === "FACULTY") {
+            tagBadgeHTML = `<span class="faculty-tag" style="background-color: #FEF3C7; color: #92400E; font-weight: 700;">⭐ FACULTY EVENT</span>`;
+        } else if (roleUpper === "ORGANIZER") {
+            tagBadgeHTML = `<span class="faculty-tag" style="background-color: #E0E7FF; color: #3730A3; font-weight: 700;">🏢 ORGANIZER EVENT</span>`;
+        }
+    }
 
     let imageHTML = "";
-
-
-    if (
-        event.image &&
-        event.image.trim() !== ""
-    ) {
-
+    if (event.image && event.image.trim() !== "") {
         imageHTML = `
-
             <div
                 class="card-image"
-                style="
-                    background-image:
-                    url('${escapeAttribute(event.image)}');
-                "
+                style="background-image: url('${escapeAttribute(event.image)}');"
             >
-
-                <span class="faculty-tag">
-                    📅 CAMPUS EVENT
-                </span>
-
+                ${tagBadgeHTML}
             </div>
-
         `;
-
     } else {
-
         imageHTML = `
-
             <div
                 class="card-image"
-                style="
-                    background:
-                    linear-gradient(
-                        135deg,
-                        #6c4ce8,
-                        #8f70ff
-                    );
-                "
+                style="background: linear-gradient(135deg, #6c4ce8, #8f70ff);"
             >
-
-                <span class="faculty-tag">
-                    📅 CAMPUS EVENT
-                </span>
-
+                ${tagBadgeHTML}
             </div>
-
         `;
-
     }
 
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.lpusocial.backend.model.Event;
 import com.lpusocial.backend.model.EventParticipant;
@@ -84,6 +85,7 @@ public List<Event> getEventsCreatedByUser(Long userId) {
 // DELETE EVENT
 // ==========================================
 
+@Transactional
 public void deleteEvent(
         Long eventId,
         Long userId) {
@@ -135,6 +137,7 @@ public void deleteEvent(
     // JOIN EVENT
     // ==========================================
 
+    @Transactional
     public EventParticipant joinEvent(
             Long eventId,
             Long userId) {

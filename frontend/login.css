@@ -1,117 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
     min-height: 100vh;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: radial-gradient(circle at 10% 20%, rgba(108, 76, 232, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 40%),
+                #0F0C20;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #F3F4F6;
 }
 
 .login-container {
     width: 100%;
-    padding: 20px;
+    padding: 24px;
 }
 
 .login-box {
-    width: 400px;
+    width: 420px;
     max-width: 100%;
     margin: auto;
-    background: white;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background: rgba(23, 19, 43, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 44px 36px;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(108, 76, 232, 0.2);
+    transition: transform 0.3s ease;
 }
 
 .login-box h1 {
     text-align: center;
-    color: #5a4fcf;
-    margin-bottom: 8px;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #A78BFA, #6C4CE8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
 }
 
 .subtitle {
     text-align: center;
-    color: #777;
-    margin-bottom: 30px;
+    color: #9CA3AF;
+    font-size: 0.95rem;
+    margin-bottom: 32px;
 }
 
 .input-group {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
 .input-group label {
     display: block;
-    margin-bottom: 7px;
-    font-weight: 600;
-    color: #333;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 0.88rem;
+    color: #E5E7EB;
 }
 
 .input-group input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 15px;
+    padding: 13px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    color: #FFFFFF;
     outline: none;
+    transition: all 0.2s ease;
 }
 
 .input-group input:focus {
-    border-color: #667eea;
+    border-color: #6C4CE8;
+    background: rgba(108, 76, 232, 0.1);
+    box-shadow: 0 0 0 3px rgba(108, 76, 232, 0.25);
 }
 
 .options {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
-    font-size: 14px;
+    margin-bottom: 28px;
+    font-size: 0.88rem;
 }
 
 .options label {
-    color: #555;
+    color: #9CA3AF;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
 }
 
 .options a {
     text-decoration: none;
-    color: #5a4fcf;
+    color: #A78BFA;
+    transition: color 0.2s;
 }
 
-button {
+.options a:hover {
+    color: #C4B5FD;
+}
+
+button[type="submit"] {
     width: 100%;
-    padding: 13px;
+    padding: 14px;
     border: none;
-    border-radius: 8px;
-    background: #5a4fcf;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #6C4CE8, #5839C6);
     color: white;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
+    box-shadow: 0 4px 15px rgba(108, 76, 232, 0.4);
+    transition: all 0.2s ease;
 }
 
-button:hover {
-    background: #493eb5;
+button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(108, 76, 232, 0.6);
 }
 
 #message {
     text-align: center;
-    margin-top: 15px;
-    font-size: 14px;
+    margin-top: 18px;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .register {
     text-align: center;
-    margin-top: 25px;
-    color: #666;
-    font-size: 14px;
+    margin-top: 28px;
+    color: #9CA3AF;
+    font-size: 0.9rem;
 }
 
 .register a {
-    color: #5a4fcf;
+    color: #A78BFA;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+.register a:hover {
+    text-decoration: underline;
 }

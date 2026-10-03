@@ -335,11 +335,17 @@ ul {
     flex-grow: 1;
 }
 .card-category {
-    font-size: 0.8rem;
+    display: inline-block;
+    font-size: 0.75rem;
     color: var(--primary);
-    font-weight: 600;
+    background: rgba(108, 76, 232, 0.1);
+    font-weight: 700;
     text-transform: uppercase;
-    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    margin-bottom: 12px;
+    width: fit-content;
 }
 .card-title {
     font-size: 1.15rem;
