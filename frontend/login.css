@@ -1,156 +1,202 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
     min-height: 100vh;
-    background: radial-gradient(circle at 10% 20%, rgba(108, 76, 232, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 40%),
-                #0F0C20;
+    background: radial-gradient(circle at 15% 15%, rgba(124, 92, 255, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(255, 94, 126, 0.2) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                #0B0819;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #F3F4F6;
+    color: #F8FAFC;
+    padding: 40px 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%237c5cff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
 }
 
 .login-container {
     width: 100%;
-    padding: 24px;
+    max-width: 440px;
+    position: relative;
+    z-index: 10;
 }
 
 .login-box {
-    width: 420px;
-    max-width: 100%;
-    margin: auto;
-    background: rgba(23, 19, 43, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 44px 36px;
-    border-radius: 24px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(108, 76, 232, 0.2);
-    transition: transform 0.3s ease;
+    background: rgba(19, 15, 38, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 48px 40px;
+    border-radius: 28px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 50px rgba(124, 92, 255, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-box:hover {
+    border-color: rgba(124, 92, 255, 0.3);
+    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.7), 0 0 60px rgba(124, 92, 255, 0.35);
 }
 
 .login-box h1 {
+    font-family: 'Outfit', sans-serif;
     text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #A78BFA, #6C4CE8);
+    font-size: 2.25rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #FFFFFF 0%, #A78BFA 50%, #7C5CFF 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     letter-spacing: -0.02em;
 }
 
 .subtitle {
     text-align: center;
-    color: #9CA3AF;
+    color: #94A3B8;
     font-size: 0.95rem;
-    margin-bottom: 32px;
+    margin-bottom: 36px;
+    font-weight: 500;
 }
 
 .input-group {
-    margin-bottom: 22px;
+    margin-bottom: 24px;
 }
 
 .input-group label {
     display: block;
     margin-bottom: 8px;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.88rem;
-    color: #E5E7EB;
+    color: #E2E8F0;
+    letter-spacing: 0.01em;
 }
 
 .input-group input {
     width: 100%;
-    padding: 13px 16px;
-    background: rgba(255, 255, 255, 0.05);
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    font-size: 0.95rem;
+    border-radius: 14px;
+    font-size: 0.98rem;
     color: #FFFFFF;
     outline: none;
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.input-group input::placeholder {
+    color: #64748B;
 }
 
 .input-group input:focus {
-    border-color: #6C4CE8;
-    background: rgba(108, 76, 232, 0.1);
-    box-shadow: 0 0 0 3px rgba(108, 76, 232, 0.25);
+    border-color: #7C5CFF;
+    background: rgba(124, 92, 255, 0.12);
+    box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.25);
 }
 
 .options {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 28px;
+    margin-bottom: 32px;
     font-size: 0.88rem;
 }
 
 .options label {
-    color: #9CA3AF;
+    color: #94A3B8;
     display: flex;
     align-items: center;
     gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.options input[type="checkbox"] {
+    accent-color: #7C5CFF;
+    width: 16px;
+    height: 16px;
     cursor: pointer;
 }
 
 .options a {
     text-decoration: none;
     color: #A78BFA;
+    font-weight: 600;
     transition: color 0.2s;
 }
 
 .options a:hover {
     color: #C4B5FD;
+    text-decoration: underline;
 }
 
 button[type="submit"] {
     width: 100%;
-    padding: 14px;
+    padding: 15px;
     border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #6C4CE8, #5839C6);
+    border-radius: 14px;
+    background: linear-gradient(135deg, #7C5CFF 0%, #6366F1 50%, #9333EA 100%);
     color: white;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.05rem;
+    font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(108, 76, 232, 0.4);
-    transition: all 0.2s ease;
+    box-shadow: 0 6px 20px rgba(124, 92, 255, 0.4);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 button[type="submit"]:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(108, 76, 232, 0.6);
+    box-shadow: 0 10px 30px rgba(124, 92, 255, 0.6);
+    filter: brightness(1.08);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
 }
 
 #message {
     text-align: center;
-    margin-top: 18px;
-    font-size: 0.9rem;
-    font-weight: 500;
+    margin-top: 20px;
+    font-size: 0.92rem;
+    font-weight: 600;
 }
 
 .register {
     text-align: center;
-    margin-top: 28px;
-    color: #9CA3AF;
-    font-size: 0.9rem;
+    margin-top: 32px;
+    color: #94A3B8;
+    font-size: 0.92rem;
 }
 
 .register a {
     color: #A78BFA;
     text-decoration: none;
-    font-weight: 600;
-    margin-left: 4px;
+    font-weight: 700;
+    margin-left: 6px;
 }
 
 .register a:hover {
+    color: #FFFFFF;
     text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .login-box {
+        padding: 36px 24px;
+    }
 }

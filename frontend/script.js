@@ -931,10 +931,14 @@ function createEventCard(event) {
 
                 </div>
 
-                <div class="meta-item">
-
-                    👥 ${joined} / ${capacity} Joined
-
+                <div class="meta-item" style="flex-direction: column; align-items: flex-start; gap: 4px; margin-top: 4px;">
+                    <div style="display: flex; justify-content: space-between; width: 100%;">
+                        <span>👥 ${joined} / ${capacity} Joined</span>
+                        <span style="font-size: 0.78rem; font-weight: 700; color: var(--primary);">${capacity > 0 ? Math.min(100, Math.round((joined / capacity) * 100)) : 0}%</span>
+                    </div>
+                    <div style="width: 100%; height: 6px; background: #E2E8F0; border-radius: 99px; overflow: hidden;">
+                        <div style="width: ${capacity > 0 ? Math.min(100, Math.round((joined / capacity) * 100)) : 0}%; height: 100%; background: var(--primary-gradient, linear-gradient(135deg, #7C5CFF, #6366F1)); border-radius: 99px; transition: width 0.4s ease;"></div>
+                    </div>
                 </div>
 
             </div>

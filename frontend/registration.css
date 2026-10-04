@@ -1,152 +1,159 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
     min-height: 100vh;
-    background: radial-gradient(circle at 10% 20%, rgba(108, 76, 232, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 40%),
-                #0F0C20;
+    background: radial-gradient(circle at 15% 15%, rgba(124, 92, 255, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.2) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(255, 94, 126, 0.15) 0%, transparent 50%),
+                #0B0819;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #F3F4F6;
-    padding: 40px 0;
+    color: #F8FAFC;
+    padding: 50px 20px;
+    position: relative;
 }
 
 .register-container {
     width: 100%;
-    padding: 24px;
+    max-width: 480px;
+    position: relative;
+    z-index: 10;
 }
 
 .register-box {
-    width: 440px;
-    max-width: 100%;
-    margin: auto;
-    background: rgba(23, 19, 43, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 40px 36px;
-    border-radius: 24px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(108, 76, 232, 0.2);
+    background: rgba(19, 15, 38, 0.78);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 44px 40px;
+    border-radius: 28px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 50px rgba(124, 92, 255, 0.25);
+    transition: transform 0.3s ease;
 }
 
 .register-box h1 {
+    font-family: 'Outfit', sans-serif;
     text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #A78BFA, #6C4CE8);
+    font-size: 2.25rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #FFFFFF 0%, #A78BFA 50%, #7C5CFF 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     letter-spacing: -0.02em;
 }
 
 .subtitle {
     text-align: center;
-    color: #9CA3AF;
-    font-size: 0.92rem;
-    margin-bottom: 28px;
+    color: #94A3B8;
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+    font-weight: 500;
 }
 
 .input-group {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
 .input-group label {
     display: block;
     margin-bottom: 8px;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.88rem;
-    color: #E5E7EB;
+    color: #E2E8F0;
 }
 
 .input-group input,
 .input-group select {
     width: 100%;
-    padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.05);
+    padding: 13px 18px;
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
+    border-radius: 14px;
     font-size: 0.95rem;
     color: #FFFFFF;
     outline: none;
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .input-group select {
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 16px center;
+    background-position: right 18px center;
     background-size: 18px;
+    cursor: pointer;
 }
 
 .input-group select option {
-    background: #17132B;
+    background: #130F26;
     color: #FFFFFF;
 }
 
 .input-group input:focus,
 .input-group select:focus {
-    border-color: #6C4CE8;
-    background: rgba(108, 76, 232, 0.1);
-    box-shadow: 0 0 0 3px rgba(108, 76, 232, 0.25);
+    border-color: #7C5CFF;
+    background: rgba(124, 92, 255, 0.12);
+    box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.25);
 }
 
 button[type="submit"] {
     width: 100%;
-    padding: 14px;
+    padding: 15px;
     border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #6C4CE8, #5839C6);
+    border-radius: 14px;
+    background: linear-gradient(135deg, #7C5CFF 0%, #6366F1 50%, #9333EA 100%);
     color: white;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.05rem;
+    font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(108, 76, 232, 0.4);
-    transition: all 0.2s ease;
-    margin-top: 8px;
+    box-shadow: 0 6px 20px rgba(124, 92, 255, 0.4);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: 10px;
 }
 
 button[type="submit"]:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(108, 76, 232, 0.6);
+    box-shadow: 0 10px 30px rgba(124, 92, 255, 0.6);
+    filter: brightness(1.08);
 }
 
 #message {
     text-align: center;
-    margin-top: 16px;
-    font-size: 0.88rem;
-    font-weight: 500;
+    margin-top: 18px;
+    font-size: 0.92rem;
+    font-weight: 600;
 }
 
 .login-link {
     text-align: center;
-    margin-top: 24px;
-    color: #9CA3AF;
-    font-size: 0.9rem;
+    margin-top: 28px;
+    color: #94A3B8;
+    font-size: 0.92rem;
 }
 
 .login-link a {
     color: #A78BFA;
     text-decoration: none;
-    font-weight: 600;
-    margin-left: 4px;
+    font-weight: 700;
+    margin-left: 6px;
 }
 
 .login-link a:hover {
+    color: #FFFFFF;
     text-decoration: underline;
 }
 
 @media (max-width: 500px) {
     .register-box {
-        padding: 30px 22px;
+        padding: 32px 24px;
     }
 }

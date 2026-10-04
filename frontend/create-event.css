@@ -1,126 +1,155 @@
 .create-event-page {
-    min-height: 80vh;
-    padding: 60px 20px;
-    background: #f7f8fc;
+    min-height: 85vh;
+    padding: 70px 20px;
+    background: linear-gradient(180deg, rgba(124, 92, 255, 0.05) 0%, #FAF9FF 100%);
 }
 
 .create-event-container {
-    width: 800px;
+    width: 840px;
     max-width: 100%;
     margin: auto;
-    padding: 40px;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 48px;
+    background: #FFFFFF;
+    border-radius: var(--radius-xl, 24px);
+    box-shadow: 0 20px 50px -10px rgba(124, 92, 255, 0.12), 0 8px 16px -4px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 .create-event-header {
-    margin-bottom: 35px;
+    margin-bottom: 38px;
+    text-align: center;
 }
 
-.page-label {
-    color: #5a4fcf;
-    font-size: 13px;
+.create-event-header .page-label {
+    display: inline-block;
+    color: var(--primary, #7C5CFF);
+    background: var(--primary-light, rgba(124, 92, 255, 0.12));
+    font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 99px;
+    margin-bottom: 12px;
 }
 
 .create-event-header h1 {
+    font-family: var(--font-heading, 'Outfit', sans-serif);
     margin: 8px 0;
-    font-size: 32px;
-    color: #222;
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: -0.02em;
 }
 
 .create-event-header p {
-    color: #666;
+    color: #64748B;
+    font-size: 1.05rem;
 }
 
 .form-group {
-    margin-bottom: 22px;
+    margin-bottom: 24px;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    font-weight: 600;
-    color: #333;
+    font-weight: 700;
+    color: #1E293B;
+    font-size: 0.95rem;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #d5d5d5;
-    border-radius: 8px;
-    font-size: 15px;
+    padding: 14px 18px;
+    border: 1px solid #E2E8F0;
+    border-radius: var(--radius-md, 12px);
+    font-size: 0.98rem;
     font-family: inherit;
     outline: none;
-    background: white;
+    background: #F8FAFC;
+    color: #0F172A;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: #5a4fcf;
+    border-color: #7C5CFF;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.15);
 }
 
 .form-group textarea {
     resize: vertical;
+    min-height: 120px;
 }
 
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 24px;
 }
 
 .form-group small {
     display: block;
-    margin-top: 7px;
-    color: #777;
-    font-size: 13px;
+    margin-top: 8px;
+    color: #64748B;
+    font-size: 0.85rem;
 }
 
 .image-preview-container {
     display: none;
-    margin-top: 15px;
+    margin-top: 18px;
 }
 
 .image-preview-container img {
     width: 100%;
-    max-height: 300px;
+    max-height: 320px;
     object-fit: cover;
-    border-radius: 10px;
-    border: 1px solid #ddd;
+    border-radius: var(--radius-lg, 16px);
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 .create-event-btn {
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     border: none;
-    font-size: 16px;
+    font-size: 1.05rem;
+    font-weight: 700;
     cursor: pointer;
+    background: linear-gradient(135deg, #7C5CFF 0%, #6366F1 50%, #9333EA 100%);
+    color: white;
+    border-radius: var(--radius-md, 12px);
+    box-shadow: 0 6px 20px rgba(124, 92, 255, 0.35);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: 12px;
+}
+
+.create-event-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(124, 92, 255, 0.5);
 }
 
 #message {
-    margin-top: 15px;
+    margin-top: 20px;
     text-align: center;
-    font-size: 14px;
+    font-size: 0.95rem;
+    font-weight: 600;
 }
 
-@media (max-width: 600px) {
-
+@media (max-width: 650px) {
     .create-event-container {
-        padding: 25px;
+        padding: 28px 20px;
     }
-
     .form-row {
         grid-template-columns: 1fr;
         gap: 0;
     }
-
     .create-event-header h1 {
-        font-size: 26px;
+        font-size: 1.8rem;
     }
 }
